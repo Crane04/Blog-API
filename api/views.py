@@ -1,8 +1,9 @@
-from django.shortcuts import render
-from rest_framework.decorators import api_view
+from django.shortcuts import render, get_object_or_404
+from rest_framework.decorators import api_view, APIView
 from rest_framework.response import Response
-from .models import Post as Blog
-from .serializers import BlogSerializer
+from .models import Post
+from .serializers import PostSerializer
+from rest_framework.request import Request
 
 @api_view(['GET'])
 def index(request):
@@ -15,83 +16,81 @@ def index(request):
 @api_view(["GET"])
 def get_posts(request):
 
-    blog = Blog.objects.all()
-    blog_serializer = BlogSerializer(blog, many = True)
+    post = Post.objects.all()
+    post_serializer = PostSerializer(post, many = True)
     return Response(
-        blog_serializer.data
+        post_serializer.data, status = 200
     )
 
-@api_view(['GET', 'POST'])
-def create_post(request):
+class PostListCreateView(APIView):
 
-    data = request.data
+    serializer_class = PostSerializer
 
-    serializer = BlogSerializer(data = data)
-    if serializer.is_valid():
-        serializer.save()
+    def get(self, request:Request, *args, **kwargs):
+        posts = Post.objects.all()
+        serializer = self.serializer_class(posts, many = True)
+
+        return Response(
+            serializer.data, status = 200
+        )
+
+    def post(self, request:Request, *args, **kwargs):
+        data = request.data
+
+        serializer = self.serializer_class(data = data)
+
+        if serializer.is_valid():
+            serializer.save()
+
+            return Response({
+                "Success": "Your Post has been uploaded",
+                "data": serializer.data
+            }, status = 201)
+
+        else:
+            return Response({
+                "Error": "Couldn't save your Post"
+            }, status = 400)
+
+class PostRetrieveUpdateDeleteView(APIView):
+
+    serializer_class = PostSerializer
+
+    def get(self, request:Request, unique_id:str):
+
+        post = get_object_or_404(Post, pk = unique_id)
+        serializer = self.serializer_class(post)
+
+        return Response(
+            serializer.data, status = 200
+        )
+
+    def put(self, request:Request, unique_id:str):
+        post = get_object_or_404(Post, pk = unique_id)
+
+        data = request.data
+        
+        serializer = self.serializer_class(post, data = data)
+
+
+        if serializer.is_valid():
+            serializer.save()
+
+            return Response({
+                "Success": "Updated",
+                "data":serializer.data
+            })
+        else:
+            return Response(
+                serializer.errors, status=400
+            )
+    def delete(self, reqest:Request, unique_id:str):
+
+        post = get_object_or_404(Post, pk = unique_id)
+
+        post.delete()
+
         return Response({
-            "success": "Your Post has successfully been created"
-        }, status=201)
-
-    else:
-        return Response({
-            serializer.errors
+            "Success": "Post has been deleted"
         }, status = 400)
-
-@api_view(["DELETE"])
-def delete_post(request):
-
-    id = request.data.get("id")
-
-    try:
-        blog = Blog.objects.get(id = id)
-        blog.delete()
-
-        return Response({
-            "Success": f"This Blog with id {id} has been deleted"
-        })
-
-    except Blog.DoesNotExist:
-        return Response({
-            "Error": f"The Blog with id {id} wasn't found."
-        }, status=404)
-
-@api_view(["GET"])
-def get_one_post(request, pk):
-
-    # id = request.data.get("id")
-    id = pk
-    try:
-        blog = Blog.objects.get(id = id)
-        serializer = BlogSerializer(blog)
-
-        return Response(serializer.data, status = 201)
-
-    except Blog.DoesNotExist:
-
-        return Response({
-            "Error": "This Blog doesn't exist"
-        }, status=404)
-
-@api_view(["PUT"])
-def update_post(request):
-
-    id = request.data.get("id")
-    title = request.data.get("title")
-    body = request.data.get("body")
-
-    try:
-        blog = Blog.objects.get(id = id)
-
-        blog.title, blog.body = title, body
-        blog.save()
-
-        return Response({
-            "Success":f"Your Post with id {id} has been successfully updated."
-        }, status=201)
-
-    except Blog.DoesNotExist:
-
-        return Response({
-            "status": f"Sorry, the post with id {id} doesn't exist"
-        }, status=201)
+        
