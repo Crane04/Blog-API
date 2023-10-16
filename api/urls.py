@@ -3,6 +3,8 @@ from .views import *
 
 urlpatterns = [
 
-    path("action/<str:unique_id>", PostRetrieveUpdateDeleteView.as_view()),
-    path("posts", PostListCreateView.as_view()),
+    path("posts/<str:custom_id>", PostRetrieveUpdateDeleteView.as_view()),
+    path("posts/api/<str:api_key>", PostListCreateView.as_view()),
+    path("test", TestToken.as_view()),
+    path("testing", TestApi.as_view())
 ]

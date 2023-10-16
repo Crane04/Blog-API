@@ -1,0 +1,26 @@
+POST  http://127.0.0.1:8000/accounts/signup
+Content-Type: application/json
+
+{ "username":  "broth", "password": "admin" }
+
+
+###
+
+POST  http://127.0.0.1:8000/accounts/login
+Content-Type: application/json
+
+{ "username":  "admin", "password": "admin" }
+
+###
+
+GET  http://127.0.0.1:8000/posts/api/7cee17c1e493d00bb72bbc14ef1dab8512a0634e
+Content-Type: application/json
+Authorization:  Token 7cee17c1e493d00bb72bbc14ef1dab8512a0634e
+
+# {"title":"u", "body":"hjdskl", "image": "None"}
+
+###
+
+GET  http://127.0.0.1:8000/test
+Content-Type: application/json
+Authorization:  Token 7cee17c1e493d00bb72bbc14ef1dab8512a0634e
