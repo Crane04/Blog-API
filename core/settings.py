@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
+    'django_summernote',
 ]
 
 MIDDLEWARE = [
@@ -151,3 +152,23 @@ REST_FRAMEWORK = {
 }
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+# Summernote
+
+
+SUMMERNOTE_CONFIG = {
+    'iframe': True, 
+    'summernote': {
+        'width': '100%',
+        'height': '400',
+        'toolbar': [
+            ['style', ['style']],
+            ['font', ['bold', 'italic', 'underline', 'clear']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview']],
+            ['misc', ['undo', 'redo']],
+        ],
+    },
+}
