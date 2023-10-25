@@ -1,0 +1,70 @@
+
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+}
+
+#blogit-container {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.post {
+    display: flex;
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.post-image {
+    flex: 1;
+    max-width: 200px;
+}
+
+.post-image img {
+    width: 100%;
+    max-width: 150px;
+    height: auto;
+}
+
+.post-content {
+    flex: 2;
+    padding: 10px;
+}
+
+.post h2 {
+    margin: 0;
+}
+
+.post p {
+    margin: 10px 0;
+}
+
+.post .read-more {
+    text-align: right;
+}
+
+.read-more a {
+    text-decoration: none;
+    color: #333;
+}
+
+.read-more a:hover {
+    text-decoration: underline;
+}

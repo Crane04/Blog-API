@@ -4,32 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Get Blog</title>
-    <style>
-        *{
-            text-align: center;
-        }
-    </style>
+    <title>Post</title>
+    <link rel="stylesheet" href="./CSS/post.css">
+    
 </head>
 <body>
-    <h1> Get Blog</h1>
-    <button>Get Post</button>
+    <div id="blogit-container">
 
+    </div>
     <script>
-        document.querySelector("button").addEventListener("click", function(){
-            fetch("http://127.0.0.1:8000/testing", {
-                headers: {
-                    'Authorization': 'Token  7cee17c1e493d00bb72bbc14ef1dab8512a0634e'
-                }
-            }).then(
-                res => res.json()
-            ).then(
-                data => {
-                    let x = data;
-                    console.log(x);
-                }
-            );
-        });
+        const api_key = "3b7266773bcd11a98936e8eeaf26c89c96b3da79"
     </script>
+            <script src="./Javascript/post.js"></script>
 </body>
 </html>
