@@ -43,13 +43,13 @@ fetch(`http://127.0.0.1:8000/posts/api/${api_key}?url=${window.location.href}`)
             post_container.innerHTML = `
 
             <div class="post-image">
-                <img src="${image}" alt="${title}">
+                <img src="http://127.0.0.1:8000${image}" alt="${title}">
             </div>
             <div class="post-content">
                 <h2>${title}</h2>
                 <p>${body}</p>
                 <div class="read-more">
-                    <a href="#">Read More</a>
+                    <a href="${data["individual_page"]}?id=${post_id}">Read More</a>
                 </div>
             </div>
             `

@@ -49,8 +49,8 @@ fetch(`http://127.0.0.1:8000/posts/api/${api_key}?url=${window.location.href}`)
             <td>${title}</td>
             <td>${formattedDate}</td>
             <td>${formattedTime}</td>
-            <td><button class="set-btn" onclick="editPost(${post_id})">Edit</button></td>
-            <td><button class="set-btn" onclick="deletePost(${post_id})">Delete</button></td>
+            <td><button class="set-btn" onclick="editPost('${post_id}')">Edit</button></td>
+            <td><button class="set-btn" onclick="deletePost('${post_id}')">Delete</button></td>
             <td><input type="checkbox" ${parameter.publish ? 'checked' : ''} disabled></td>
             <td><input type="checkbox" ${parameter.featured ? 'checked' : ''} disabled></td>
         `;

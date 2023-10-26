@@ -44,9 +44,9 @@ INSTALLED_APPS = [
     "userprofile",
     "app",
 
+
     # dependencies
     'rest_framework',
-    'rest_framework.authtoken',
     'corsheaders',
     'tinymce',
 ]
@@ -54,8 +54,6 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     # Cors
     'corsheaders.middleware.CorsMiddleware',
-
-
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -145,38 +143,18 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": [
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
-    ]
-}
+# REST_FRAMEWORK = {
+#     "DEFAULT_PERMISSION_CLASSES": [
+#         'rest_framework.permissions.AllowAny'
+#     ],
+#     "DEFAULT_AUTHENTICATION_CLASSES": []
+# }
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-# Summernote
-
-
-QUILL_CONFIGS = {
-    'default': {
-        'theme': 'snow',
-        'modules': {
-            'syntax': True,  # Enable code syntax highlighting
-            'toolbar': [
-                [
-                    {'font': []},
-                   {'header': [1, 2, 3, 4, 5, 6]},
-                    {'align': []},
-                    'bold', 'italic', 'underline', 'strike', 'blockquote',
-                    {'color': []}, {'background': []},
-                    'link', 'image', 'formula',  # Enable image and formula (equations) modules
-                    'code-block',
-                    "list",
-                ],
-                ['clean'],
-            ],
-            'imageResize': {},  # Enable image resizing
-            'formula': True,  # Enable the formula module for equations
-        }
-    }
-}
 

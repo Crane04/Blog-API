@@ -21,4 +21,11 @@ function editPost(postId) {
 // Function to delete a post (you would implement this functionality)
 function deletePost(postId) {
     // Implement the delete functionality here
+    const requestOptions = {
+        method: 'DELETE',
+        headers:{
+            "Authorization": "Token " + api_key
+        }
+    };
+    fetch("http://127.0.0.1:8000/posts/" + postId, requestOptions)
 }

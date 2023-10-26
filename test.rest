@@ -1,7 +1,7 @@
 POST  http://127.0.0.1:8000/accounts/signup
 Content-Type: application/json
 
-{ "username":  "broth", "password": "admin" }
+{ "username":  "admin", "password": "admin" }
 
 
 ###
