@@ -21,10 +21,16 @@ from ckeditor_uploader import views as ckeditor_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    # Apps
     path("", include("api.urls")),
     path("accounts/", include("userprofile.urls")),
+    path("", include("app.urls")),
+
+    # Dependencies
     path("api-auth/", include("rest_framework.urls")),
     path("tinymce/", include("tinymce.urls")),
+
 
 ]
 

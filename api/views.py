@@ -6,8 +6,8 @@ from rest_framework.response import Response
 from .models import Post
 from .serializers import PostSerializer#, GetPostSerializer
 from rest_framework.request import Request
-from rest_framework.generics import GenericAPIView
-from rest_framework.mixins import CreateModelMixin, ListModelMixin, UpdateModelMixin, DestroyModelMixin, RetrieveModelMixin
+from rest_framework.generics import GenericAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.mixins import CreateModelMixin, ListModelMixin
 from rest_framework import status
 from rest_framework.parsers import MultiPartParser, FormParser
 from django.contrib.auth.models import User
@@ -92,97 +92,10 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
 
         return self.list(request, *args, **kwargs)
 
-    def post(self, request:Request, api_key,*args, **kwargs):
-
-        # try:
-        
-        return self.create(request,api_key, *args, **kwargs)
-        # except:
-        #     return Response({
-        #         "Error": "Couldn't update"
-        #     }, status=400)
-
-    def create(self, request,api_key, *args, **kwargs):
-        # Define Fields
-        token = get_object_or_404(Token, key = api_key)
-       
-        user_ = get_object_or_404(User, username = self.request.user_)
-        creator = token.user
-        print(user_, creator, self.request.user.is_authenticated)
-        if user_ == creator:
-        
-            title = request.data["title"]
-            image = request.data["image"]
-            body = request.data["body"]
-            publish = request.data["publish"]
-            featured = request.data["featured"]
-
-            # Convert js bool
-            if publish == "true":
-                publish = True
-            elif publish == "false":
-                publish = False
-
-            if featured == "true":
-                featured = True
-            elif featured == "false":
-                featured = False
 
 
-            Post.objects.create(
-                creator = creator,
-                title = title,
-                image = image,
-                body = body,
-                publish = publish,
-                featured = featured
-            )
-
-            return Response({
-                
-                "Success": "Created Successflly"
-            }, status = 201)
-        else:
-            print("Error")
-
-
-class PostRetrieveUpdateDeleteView(GenericAPIView, UpdateModelMixin, DestroyModelMixin, RetrieveModelMixin, RestrictAccess):
-
-
+class PostRetrieveUpdateDeleteView(RetrieveUpdateDestroyAPIView):
     serializer_class = PostSerializer
-
-    permission_classes = [IsAuthenticatedOrReadOnly, RestrictAccess]
+    permission_classes = [IsAuthenticated, RestrictAccess]
     queryset = Post.objects.all()
-    lookup_field= "custom_id"
-
-    def get(self, request:Request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-   
-    def put(self, request:Request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-    def delete(self, request:Request, *args, **kwargs):
-
-        return self.destroy(request, *args, **kwargs)
-
-    def destroy(self, request, *args, **kwargs):
-        pass
-
-
-class TestToken(APIView):
-    permission_classes = [IsAdminUser]
-
-    def get(self, request:Request, *args, **kwargs):
-
-        return Response({})
-
-from .serializers import GetUser
-class NopeView(APIView):
-    def get(self, request):
-        try:
-            # Your code to retrieve user data
-            user_data = {"user": request.user.username}
-            return Response(user_data)
-        except Exception as e:
-            # Handle exceptions and return a JSON error response
-            return Response({"error": str(e)}, status=500)
+    lookup_field = "custom_id"

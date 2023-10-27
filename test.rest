@@ -24,3 +24,9 @@ Authorization:  Token 7cee17c1e493d00bb72bbc14ef1dab8512a0634e
 GET  http://127.0.0.1:8000/test
 Content-Type: application/json
 Authorization:  Token 7cee17c1e493d00bb72bbc14ef1dab8512a0634e
+
+###
+
+GET http://127.0.0.1:8000/dashboard/actions/lkijuhg49efad8e0f
+Content-Type: application/json
+Authorization:  Token 7cee17c1e493d00bb72bbc14ef1dab8512a0634e

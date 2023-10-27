@@ -1,6 +1,5 @@
 {% load static %}
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,89 +21,45 @@
     </section>
     <section class="container">
 
-        <section id="btns">
-            <button id="create-post-btn" onclick="toggleSection('create-post')">Create Post</button>
-            <button id="manage-post-btn" onclick="toggleSection('manage-post')">Manage Posts</button>
-        </section>
 <!-- Inside the body section -->
-
+        {% for message in messages %}
+            <div class="alert alert-success" role="alert" id="editor-empty-alert">
+            {{ message }}
+        </div>
+        {% endfor %}
         <!-- Create Post Section -->
         <section id="create-post" class="form-section active">
-            <!-- Inside the body section -->
-            {% for message in messages %}
-            <div class="alert alert-success" role="alert" id="editor-empty-alert">
-                {{ message }}
-            </div>
-            {% endfor %}
-
-            <h3>Create New Post</h3>
+            <h3>Edit Post</h3>
             <form enctype="multipart/form-data" method="post">
                 {% csrf_token %}
 
                 <section class="form-group">
                     <label for="title">Title:</label>
-                    <input type="text" class="form-control" id="title" name="title" required>
+                    <input type="text" class="form-control" id="title" name="title" required value = "{{ post.title }}">
                 </section>
 
                 <section class="form-group">
                     <label for="content">Content:</label>
-                    <textarea id="content" name="content"></textarea>
+                    <textarea id="content" name="content">{{ post.body | safe }}</textarea>
                 </section>
 
                 <section class="form-group">
                     <label for="image">Image:</label>
-                    <input type="file" class="form-control-file" id="image" name="image" accept=".png, .jpg, .jpeg">
+                    <input type="file" class="form-control-file" id="image" name="image" accept=".png, .jpg, .jpeg" >
                 </section>
 
                 <section class="form-check">
-                    <input type="checkbox" class="form-check-input" id="publish" name="publish">
+                    <input type="checkbox" class="form-check-input" id="publish" name="publish" {% if post.publish == True %} checked {% endif %}>
                     <label class="form-check-label" for="publish">Publish</label>
                 </section>
 
                 <section class="form-check">
-                    <input type="checkbox" class="form-check-input" id="featured" name="featured">
+                    <input type="checkbox" class="form-check-input" id="featured" name="featured" {% if post.featured == True %} checked {% endif %}>
                     <label class="form-check-label" for="featured">Featured</label>
                 </section>
 
                 <button type="submit" class="btn btn-primary" name="submitpost" id="make-post">Create Post</button>
             </form>
-        </section>
-
-        <!-- Manage Post Section -->
-        <section id="manage-post" class="form-section">
-            <h2>Manage Posts</h2>
-            <table class="table table-responsive">
-                <thead>
-                    <tr>
-                        <th>S/N</th>
-                        <th>Title</th>
-                        <th>Date</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                        <th>Publish</th>
-                        <th>Featured</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for post in posts %}
-                        <tr>
-                            <td class="numbering"></td>
-                            <td>{{ post.title }}</td>
-                            <td>{{ post.time }}</td>
-                            <form action="" method="post">
-                                {% csrf_token %}
-                                <td id="dp{{ post.custom_id }}"><button class="set-btn" id = "{{ post.custom_id }}" onclick="editPost('{{ post.custom_id }}')">Edit</button></td>
-                            </form>
-
-                                {% csrf_token %}
-                                <td><button class="set-btn" onclick="deletePost('{{ post.custom_id }}')">Delete</button></td>
-                    
-                            <td><input type="checkbox" {% if post.publish == True %} checked {% endif %}  disabled></td>
-                            <td><input type="checkbox" {% if post.featured == True %} checked {% endif %}  disabled></td>
-                        </tr>
-                    {% endfor %}                        
-                </tbody>
-            </table>
         </section>
     </section>
     <script>

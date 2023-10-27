@@ -1,0 +1,66 @@
+body {
+    background-color: #eee; /*Deep green color*/
+    color: #fff; /* Text color */
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin: 0;
+    color: #075e54;
+}
+
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.form-section {
+    display: none;
+}
+
+
+.form-section.active {
+    display: block;
+}
+
+/* Style the header */
+.header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 10px 0;
+background-color: #128c7e; /* Darker green color for the header */
+color: #fff;
+height: 90px;
+padding-left: 50px;
+padding-right: 50px;
+}
+
+/* Style the Username on the left */
+.header .username {
+font-weight: bold; /* Make it bold */
+margin-right: 10px; /* Add some margin to separate it from the title */
+}
+
+/* Style the Bloggit title on the right */
+.header .title {
+font-size: 24px; /* Increase the font size */
+}
+
+#btns button, .btn.btn-primary, .set-btn{
+background-color: #128c7e;
+border-radius: 3px ;
+border: none;
+width: 150px;
+margin-right: 12px;
+color: #fff;
+height: 45px;
+margin-bottom: 40px;
+}
+.btn.btn-primary{
+width: 200px;
+}
+.set-btn{
+width: fit-content;
+height: fit-content;
+margin-bottom: 12px;
+}
