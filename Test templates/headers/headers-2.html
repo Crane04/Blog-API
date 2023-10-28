@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation Bar with Logo Image</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: #e74c3c;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 999;
+        }
+
+        .navbar-brand {
+            color: #ecf0f1;
+            font-size: 24px;
+            margin: 10px;
+        }
+
+        .logo-img {
+            width: 40px; /* Adjust the size as needed */
+        }
+
+        .menu-icon {
+            font-size: 30px;
+            color: #ecf0f1;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            background-color: #e74c3c;
+            height: 100vh;
+            position: absolute;
+            top: 60px;
+            right: -100%;
+            transition: all 0.3s ease-in;
+        }
+
+        .nav-menu.active {
+            right: 0;
+        }
+
+        .nav-menu a {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-size: 20px;
+            margin: 20px;
+        }
+
+        .nav-menu a:hover {
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a class="navbar-brand" href="#">
+            <img src="your-logo-image.png" alt="Logo" class="logo-img"> <!-- Replace with your logo image -->
+        </a>
+        <i class="menu-icon fas fa-bars" id="menu-icon"></i>
+        <div class="nav-menu" id="nav-menu">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Services</a>
+            <a href="#">Contact</a>
+        </div>
+    </nav>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        const menuIcon = document.getElementById("menu-icon");
+        const navMenu = document.getElementById("nav-menu");
+
+        menuIcon.addEventListener("click", () => {
+            navMenu.classList.toggle("active");
+        });
+    </script>
+</body>
+</html>

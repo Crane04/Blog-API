@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .blog-container-1{
+        margin-left: 100px;
+        margin-right: 100px;
+    }
+    .blog-container-1 .blog-post {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .blog-container-1 .post-content {
+      flex: 1;
+    }
+
+    .blog-container-1 .post-image {
+      flex: 1;
+      text-align: right;
+    }
+    .blog-container-1 .post-image img{
+        width: 250px;
+        height: auto;
+    }
+
+    @media (max-width: 768px) {
+        .blog-container-1{
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+        .blog-container-1  .blog-post {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .blog-container-1 .post-image {
+        text-align: center;
+        width: 100%;
+
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="blog-container-1">
+    <div class="blog-post">
+      <div class="post-content">
+        <h2>Post Title 1</h2>
+        <p>Your post content goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </div>
+      <div class="post-image">
+        <img src="C:\Users\Craennie\Desktop\Blog-API\Test templates\Images\human.jpeg" alt="Image 1">
+      </div>
+    </div>
+    <div class="blog-post">
+      <div class="post-content">
+        <h2>Post Title 2</h2>
+        <p>Your post content goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </div>
+      <div class="post-image">
+        <img src="C:\Users\Craennie\Desktop\Blog-API\Test templates\Images\human.jpeg" alt="Image 2">
+      </div>
+    </div>
+    <!-- Add more blog posts here -->
+  </section>
+</body>
+</html>

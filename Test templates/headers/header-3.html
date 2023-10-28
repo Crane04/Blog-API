@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circular Menu Header</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            background-color: #3498db;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .company-name {
+            color: #ecf0f1;
+            font-size: 24px;
+            margin: 10px;
+        }
+
+        .menu-icon {
+            font-size: 30px;
+            color: #ecf0f1;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-right: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #ecf0f1;
+            font-size: 20px;
+        }
+
+        .circular-menu {
+            display: none;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+
+        .circular-menu.active {
+            display: block;
+        }
+
+        .circular-menu-icon {
+            background-color: #3498db;
+            color: #ecf0f1;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 60px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .circular-menu-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .circular-menu-links.active {
+            display: flex;
+        }
+
+        .circular-menu-links li {
+            margin: 10px 0;
+        }
+
+        .circular-menu-links a {
+            text-decoration: none;
+            color: #3498db;
+            font-size: 18px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .circular-menu {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a class="company-name" href="#">Company Name</a>
+        <i class="menu-icon fas fa-bars" id="menu-icon"></i>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </header>
+
+    <div class="circular-menu" id="circular-menu">
+        <div class="circular-menu-icon" id="circular-menu-icon">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="circular-menu-links" id="circular-menu-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        const menuIcon = document.getElementById("menu-icon");
+        const circularMenu = document.getElementById("circular-menu");
+        const circularMenuIcon = document.getElementById("circular-menu-icon");
+        const circularMenuLinks = document.getElementById("circular-menu-links");
+
+        menuIcon.addEventListener("click", () => {
+            circularMenu.classList.toggle("active");
+        });
+
+        circularMenuIcon.addEventListener("click", () => {
+            circularMenuLinks.classList.toggle("active");
+        });
+    </script>
+</body>
+</html>
