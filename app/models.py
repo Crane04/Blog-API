@@ -7,7 +7,27 @@ class UserSites(models.Model):
     home_page = models.CharField(max_length = 100,  blank=True, null=True)
     blog_page = models.CharField(max_length = 100,  blank=True, null=True)
     individual_blog_post = models.CharField(max_length = 100,  blank=True, null=True)
-    admin_page = models.CharField(max_length = 100,  blank=True, null=True) #Posts, delete and edit can be made from admin Page
 
     def __str__(self):
         return str(self.user)
+
+def upload_script_path(instance, filename):
+    # Define the upload path for images
+    return f"js/{filename}"
+
+def upload_css_path(instance, filename):
+    # Define the upload path for images
+    return f"css/{filename}"
+
+class Scripts(models.Model):
+    name = models.CharField(max_length=100)
+    script = models.FileField(upload_to = upload_script_path)
+    def __str__(self):
+        return self.name
+
+class CSS(models.Model):
+    name = models.CharField(max_length=100)
+    css_file = models.FileField(upload_to = upload_css_path)
+
+    def __str__(self):
+        return self.name

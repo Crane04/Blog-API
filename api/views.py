@@ -14,6 +14,7 @@ from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAdminUser, BasePermission, SAFE_METHODS, IsAuthenticated
 from app.models import *
 from userprofile.models import Token
+from app.models import Scripts
 
 
 class RestrictAccess(BasePermission):
@@ -40,16 +41,20 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
 
         # Get user associated with the token
         user = get_object_or_404(User, username = token.user)
-        # user_ = 
-        print(self.request.user)
-
+      
         requesting_url = request.GET.get("url")
+        cont_rend = request.GET.get("cont_rend")
+
+        try:
+            script = get_object_or_404(Scripts, name = cont_rend)
+        except:pass
+
+        print(script.script)
         user_urls = get_object_or_404(UserSites, user = token.user)
 
         # Remove queries from requesting_url in home or blog page
 
-        if "?" in requesting_url:
-            requesting_url_homeblog = requesting_url.split("?")[0]
+        requesting_url_homeblog = requesting_url.split("?")[0]
 
         # Filter Posts
         if requesting_url_homeblog == user_urls.blog_page:
@@ -60,11 +65,16 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
             serialized_data = PostSerializer(data = data,  many = True)
             serialized_data.is_valid()
 
+            response_data = {
+                "posts": serialized_data.data,
+                "individual_page": user_urls.individual_blog_post
+            }
+            if cont_rend:
+                response_data["script"] = script.script
 
-            return Response({
-               "posts": serialized_data.data,
-               "individual_page": user_urls.individual_blog_post
-            })
+            return Response(
+                response_data
+            )
 
         elif requesting_url_homeblog == user_urls.home_page:
             # Only Featured Posts
@@ -75,10 +85,16 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
             serialized_data.is_valid()
 
 
-            return Response({
-               "posts": serialized_data.data,
-               "individual_page": user_urls.individual_blog_post
-            })
+            response_data = {
+                "posts": serialized_data.data,
+                "individual_page": user_urls.individual_blog_post
+            }
+            if cont_rend:
+                response_data["script"] = script.script
+                
+            return Response(
+                response_data
+            )
 
         elif requesting_url.split("?id=")[0] == user_urls.individual_blog_post:
             # The Id in the Post will be gotten and used here

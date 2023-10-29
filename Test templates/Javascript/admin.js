@@ -4,8 +4,6 @@ function toggleSection(sectionId) {
     document.getElementById(sectionId).classList.add('active');
 }
 
-
-
 // Handle form submission (you'd send the data to the server)
 const postForm = document.getElementById('post-form');
 postForm.addEventListener('submit', (e) => {

@@ -4,12 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog Page</title>
-    <link rel="stylesheet" href="./CSS/home_and_blog.css">
+    <script> 
+        const bloggit_conf = {
+            "api_key": "7070aa3bfb7a4f6f8266fa44180d4aaf",
+            "cont_rend":"slimy-vue",
+            "header": {
+                "type": "milky-way",
+                "name": "Craennie's Blog",
+                "links":{
+                    "Home": "/home",
+                    "Contact": "/contact",
+                    "About": "/about"
+                }
+            }
+        }
+    </script>
+    <script src="./Javascript/home_and_blog.js"></script>
 </head>
 <body>
-    <header>
-        <h1>My Blog</h1>
-    </header>
+<section id="bloggit-header">
+    
+</section>
 
     <section id="blogit-container">
         <section class="post">
@@ -41,9 +56,6 @@
         <!-- Add more posts as needed -->
 
     </section>
-    <script>
-        const api_key = "7070aa3bfb7a4f6f8266fa44180d4aaf"
-    </script>
-        <script src="./Javascript/home_and_blog.js"></script>
+
 </body>
 </html>
