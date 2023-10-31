@@ -41,6 +41,7 @@ h1 {
     width: 100%;
     max-width: 150px;
     height: auto;
+    padding: 20px;
 }
 
 .post-content {
@@ -67,4 +68,10 @@ h1 {
 
 .read-more a:hover {
     text-decoration: underline;
+}
+
+@media(max-width:800px){
+    .post{
+        flex-direction: column;
+    }
 }

@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.views import View
 from api.models import Post
 from django.contrib import messages
+from userprofile.models import Token
+from app.models import UserSites
+
 # Create your views here.
 
 class AdminPageView(View):
@@ -26,7 +29,6 @@ class AdminPageView(View):
 
 
         if "publish" in request.POST:
-            print(1)
             publish = True
         else:
             publish = False
@@ -97,3 +99,79 @@ class PostEditView(View):
         messages.info(request, "You've successfully updated this Post!")
 
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+class DocumentationView(View):
+    template_name = "documentation.html"
+
+    def get(self, request, *args, **kwargs):
+
+        return render(request, self.template_name)
+
+class ApiPageView(View):
+
+    template_name = "api.html"
+
+    def get(self, request, *args, **kwargs):
+        token, create_token = Token.objects.get_or_create(user = request.user)
+        try:
+            user_sites = get_object_or_404(UserSites, user = request.user)
+        except:
+            user_sites = []
+        if token:
+            user_api_key = token.key
+        elif token is None:
+            user_api_key = create_token.key
+        else:
+            user_api_key = "Not Availabe for now!"
+
+        context = {
+            "api_key": user_api_key,
+            "user_sites": user_sites
+        }
+
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        try:
+            if request.method == "POST":
+                print(0)
+                homePage = request.POST["homePage"]
+                print(1)
+                blogPage = request.POST["blogPage"]
+                individualPostPage = request.POST["individualPostPage"]
+
+                sites = get_object_or_404(UserSites, user = request.user)
+
+                sites.home_page = homePage
+                sites.blog_page = blogPage
+                sites.individual_blog_post = individualPostPage
+
+                sites.save()
+
+                messages.success(request, "Your site url's have been sucessfully updated!")
+                return redirect("/dashboard/api")
+
+        except:
+            messages.error(request, "Couldn't update your site urls!")
+            return redirect("/dashboard/api")
+
+def rest(request):
+    if request.method == "POST":
+        print(0)
+        homePage = request.POST["homePage"]
+        print(1)
+        blogPage = request.POST["blogPage"]
+        individualPostPage = request.POST["individualPostPage"]
+
+        sites = get_object_or_404(UserSites, user = request.user)
+
+        sites.home_page = homePage
+        sites.blog_page = blogPage
+        sites.individual_blog_post = individualPostPage
+
+        sites.save()
+        print(1)
+        return JsonResponse({
+            "Success": "Edited successfully"
+        })

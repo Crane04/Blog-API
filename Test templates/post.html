@@ -2,19 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post</title>
-    <link rel="stylesheet" href="./CSS/post.css">
-    
+    <title>Blog Post</title>
+    <!-- Add Bootstrap CSS Link -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <script> 
+        const bloggit_conf = {
+            "api_key": "7070aa3bfb7a4f6f8266fa44180d4aaf",
+            "cont_rend":"cappuccino",
+            "header": {
+                "type": "milky-way",
+                "brand_name": "Craennie's Blog",
+                "links":{
+                    "Home": "/home",
+                    "Contact": "/contact",
+                    "About": "/about"
+                }
+            }
+        }
+    </script>
+    <script src="./Javascript/home_and_blog.js"></script>
 </head>
 <body>
-    <div id="blogit-container">
+    <!-- Navigation Bar -->
+    <section id="bloggit-header">
+
+    </section>
+
+    <div  id="bloggit-container">
 
     </div>
-    <script>
-        const api_key = "7070aa3bfb7a4f6f8266fa44180d4aaf"
-    </script>
-            <script src="./Javascript/post.js"></script>
+    <!-- Add Bootstrap JS and jQuery for responsive features (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -9,14 +9,43 @@
     <title>Admin Page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'CSS/admin.css' %}">
+    <style>
+        .header a{
+            color: white;
+        }
+        .header a {
+            text-decoration: none;
+        }
+        .header span{
+            margin-left: 17px;
+        }
+        #logout-link{
+            background-color: #eee;
+            padding-left: 7px;
+            padding-right: 7px;
+            border-radius: 2px;
+        }
+        #logout-link a {
+            color: #075e54;
+        }
+        #logout-link:hover a{
+            background-color: #075e54;
+            color: white !important;
+        }
+        #logout-link:hover {
+            background-color: #075e54;
+            color: white !important;
+        }
+    </style>
 </head>
 <body>
     <section class="header">
         <section>
-            <h2>Bloggit</h2>
+            <h2><a href="/">Bloggit!</a></h2>
         </section>
         <section>
             <span> {{ request.user.username }}</span>
+            <span id="logout-link"><a href="/accounts/logout">Logout</a></span>
         </section>
 
     </section>
@@ -32,8 +61,8 @@
         <section id="create-post" class="form-section active">
             <!-- Inside the body section -->
             {% for message in messages %}
-            <div class="alert alert-success" role="alert" id="editor-empty-alert">
-                {{ message }}
+                <div class="alert alert-success" role="alert" id="editor-empty-alert">
+            {{ message }}
             </div>
             {% endfor %}
 
@@ -114,9 +143,6 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
     <script src="{% static  'Javascript/summernote.js' %}"></script>
-    <!-- <script src = "{% static 'Javascript/admin.js' %}"></script>  -->
-    <!--<script src = "{% static 'Javascript/make-post.js' %} "></script> 
-    <script src = "{% static 'Javascript/manage-posts.js' %}"></script> -->
     <script>
 
         function toggleSection(sectionId) {

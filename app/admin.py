@@ -4,3 +4,4 @@ from .models import *
 
 admin.site.register(UserSites)
 admin.site.register(Scripts)
+admin.site.register(CSS)

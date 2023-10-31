@@ -1,0 +1,132 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #075e54;
+            color: #fff;
+            max-height: 100vh;
+        }
+        .container{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 90vh;
+            flex-direction: row;
+            flex-wrap: wrap;
+            
+        }
+        .login-container {
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .login-container h2 {
+            text-align: center;
+            color: #075e54;
+        }
+
+        .login-image {
+            margin-top: 12px;
+        }
+
+        .login-image img {
+            max-width: 60%;
+        }
+        .form-group{
+            color:#075e54;
+            text-align: left;
+        }
+        .btn-block{
+            background-color: #075e54;
+            border: 1px solid #075e54;
+        }
+        .brand{
+            text-align: center;
+            margin-top: 25px;
+            margin-bottom: -100px;
+        }
+        @media(max-width:1000px){
+            .container{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: max-content;
+            flex-direction: column;
+            flex-wrap: nowrap;
+
+            
+            }
+            .brand{
+                margin-top: 0px;
+                margin-bottom: 0px;
+            } 
+            .login-image {
+
+            margin-top: 12px;
+            display: flex;
+            justify-content: center;
+            }
+            .login-container {
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="brand">
+        <h1>Bloggit</h1>
+        <p>Create Blog Applications with ease!</p>
+    </div>
+    <div class="container">
+        <div class="login-image">
+            <img src="C:\Users\Craennie\Desktop\Blog-API\Test templates\Images\human.jpeg" alt="Login Image">
+        </div>
+        <div class="login-container">
+            <h2>Login</h2>
+            <form method="post">
+                {% csrf_token %}
+                {% for message in messages %}
+                <div class="alert alert-warning" role="alert" id="editor-empty-alert">{{ message }}</div>
+                {% endfor %}
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control" id="name" name="username" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="name">Email:</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Create Password" required>
+                </div>
+                <div class="form-group">
+                    <label for="password2">Password:</label>
+                    <input type="password" class="form-control" id="password2" name="password2" placeholder="Confirm Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Submit</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        /* Custom CSS for responsiveness */
+        .container {
+            padding: 0;
+            width: max-content;
+        }
+        body{
+            background-color: #eee;
+        }
+        .navbar{
+            background-color: #075e54 !important;
+        }
+        #sidenav {
+            background-color: #075e54;
+            color: white;
+            position: fixed;
+            top: 0;
+            margin-top:50px;
+            bottom: 0;
+            z-index: 1;
+            padding: 20px;
+            width: 250px;
+            overflow-x: hidden;
+        }
+        #sidenav a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 16px;
+            color: white;
+            display: block;
+        }
+        #sidenav a:hover {
+            background-color: #007BFF;
+        }
+        .main-content {
+            margin-left: 270px;
+            word-wrap: break-word;
+            width: fit-content;
+        }
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            #sidenav {
+                width: 100%;
+                position: fixed;
+                height: fit-content;
+                overflow-x: auto;
+                top: 0;                
+                overflow-x: auto;
+                white-space: nowrap;
+                /* margin-bottom: 210px; */
+            }
+            #sidenav ul{
+                display: flex;
+                flex-direction: row !important;
+                margin-top: 10px;
+                flex-wrap: nowrap;
+                /* margin-right: 100px; */
+            }
+            #sidenav ul li{
+                width: fit-content;
+            }
+            
+            .main-content {
+                margin-left: 5px;
+                /* width: 100%; */
+                margin-top: 120px !important;
+            }
+        }
+    </style>
+    <title>API Documentation</title>
+</head>
+<body>
+    <!-- Top Navbar -->
+
+    {% include 'extensions/nav.html' %}
+    <!-- Side Navbar -->
+    <nav id="sidenav">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="#intro">Introduction</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#section2">Account</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#section3">Endpoint 3</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#section3">Endpoint 3</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#section3">Endpoint 3</a>
+            </li>    
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container main-content mt-4">
+        <!-- Section 1: Endpoint 1 -->
+        <section id="intro">
+            <h1>Introduction</h1>
+            <p>Here is a brief description about Bloggit!</p>
+            <article>
+                <p>
+                    BlogIt stands as a robust content management system designed to
+                     cater to the needs of front-end developers, ensuring that they
+                      can create compelling blog websites with little configurations,
+                       all without the requirement of intricate backend or database
+                        expertise. This user-friendly platform offers an all-in-one solution, 
+                    providing a secure and efficient database to store and manage all your content effortlessly.
+                </p>
+                <p>
+                    One of the standout features of BlogIt is its capacity to streamline
+                     the creation of dynamic navigation bars. This allows
+                      developers to customize their website's menu and improve the overall user experience,
+                     all without diving into the complexities of server-side development.
+                </p>
+                <p>
+                    Moreover, BlogIt simplifies the rendering of blog content. It enables
+                     you to effortlessly showcase not only the collective blogs but also
+                      individual posts, ensuring a smooth and aesthetically pleasing display. 
+                    With BlogIt, you can give your audience a seamless and engaging
+                     browsing experience while maintaining full control over your website's content.
+                </p>
+                <p>
+                    In summary, BlogIt is the go-to choice for developers who
+                     seek a hassle-free and efficient means of creating and managing
+                      blog websites with little configurations, making it easier
+                       than ever to share their ideas and stories with the world.
+                </p>
+                <p>
+                    The following is th full Documentation on how to use this API.
+                </p>
+            </article>
+        </section>
+
+        <!-- Section 2: Endpoint 2 -->
+        <section id="section2">
+            <h1>Set Up yor Account</h1>
+            <p>Here is a brief description of what this API endpoint does.</p>
+            <h2>Request</h2>
+            <p>Include details about the request, such as HTTP method, endpoint URL, and any required parameters.</p>
+            <pre><code style="border-left: 3px solid #007BFF; padding-left: 10px; background-color: #f7f7f7; display: block;">
+POST /api/endpoint2
+Content-Type: application/json
+
+{
+    "data": "Some data for Endpoint 2"
+}
+</code></pre>
+            <h2>Response</h2>
+            <p>Provide information about the response, including status codes and sample response data.</p>
+            <pre><code style="border-left: 3px solid #007BFF; padding-left: 10px; background-color: #f7f7f7; display: block;">
+HTTP/1.1 201 Created
+Content-Type: application/json
+
+{
+    "message": "Endpoint 2 data has been created",
+    "id": 123
+}
+</code></pre>
+        </section>
+
+        <!-- Section 3: Endpoint 3 -->
+        <section id="section3">
+            <h1>Endpoint 3</h1>
+            <p>Here is a brief description of what this API endpoint does.</p>
+            <h2>Request</h2>
+            <p>Include details about the request, such as HTTP method, endpoint URL, and any required parameters.</p>
+            <pre><code style="border-left: 3px solid #007BFF; padding-left: 10px; background-color: #f7f7f7; display: block;">
+PUT /api/endpoint3/123
+Content-Type: application/json
+
+{
+    "data": "Updated data for Endpoint 3"
+}
+</code></pre>
+            <h2>Response</h2>
+            <p>Provide information about the response, including status codes and sample response data.</p>
+            <pre><code style="border-left: 3px solid #007BFF; padding-left: 10px; background-color: #f7f7f7; display: block;">
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+    "message": "Endpoint 3 data has been updated",
+    "id": 123
+}
+</code></pre>
+        </section>
+
+        <!-- Add more sections for additional endpoints following the same structure -->
+    </div>
+
+    <!-- Bootstrap Scripts -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+                const active_link = $(".nav-link")[0]
+        active_link.className = "nav-link active"
+    </script>
+</body>
+</html>

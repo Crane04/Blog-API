@@ -2,21 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog Page</title>
-
-    <link rel="stylesheet" href="./CSS/home_and_blog.css">
-
-</head>
-<body>
-    <h1>BlogThat - All My Posts</h1>
-    <div id="blogit-container">
-        
-    </div>
-    <script>
-        const api_key = "7070aa3bfb7a4f6f8266fa44180d4aaf"
+    <script> 
+        const bloggit_conf = {
+            "api_key": "7070aa3bfb7a4f6f8266fa44180d4aaf",
+            "cont_rend":"classic",
+            "header": {
+                "type": "milky-way",
+                "brand_name": "Craennie's Blog",
+                "links":{
+                    "Home": "/home",
+                    "Contact": "/contact",
+                    "About": "/about"
+                }
+            }
+        }
     </script>
     <script src="./Javascript/home_and_blog.js"></script>
+</head>
+<body>
+<section id="bloggit-header">
+
+</section>
+
+    <section id="bloggit-container">
+
+
+        <!-- Add more posts as needed -->
+
+    </section>
+
 </body>
 </html>

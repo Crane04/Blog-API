@@ -2,7 +2,41 @@
 let current_url = window.location.href
 let api_key = bloggit_conf.api_key
 let cont_rend = bloggit_conf.cont_rend
-fetch(`http://127.0.0.1:8000/posts/api/${api_key}?url=${current_url}&cont_rend=${cont_rend}`)
+let header_type = bloggit_conf.header.type
+
+
+
+function convert_datetime(param){
+    const dateComponents = param.match(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})/);
+
+    const year = parseInt(dateComponents[1]);
+    const month = parseInt(dateComponents[2]) - 1;
+    const day = parseInt(dateComponents[3]);
+
+    // Create a JavaScript Date object without considering the timezone
+    const date = new Date(year, month, day);
+
+    // Format the date as "Month Day, Year"
+   return  date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+function strip_tags(param){
+    let post_body = document.createElement("p")
+    post_body.innerHTML = param
+    let elements_to_remove = post_body.querySelectorAll("table", "img", "iframe", "audio", "video", "picture", "figure", "canvas")
+
+    elements_to_remove.forEach(function(element) {
+        element.remove();
+    });
+    var words = post_body.innerText.split(/\s+/);
+
+    // Select the first 120 words
+    return words.slice(0, 30).join(' ');
+}
+
+
+fetch(`http://127.0.0.1:8000/posts/api/${api_key}?url=${current_url}&cont_rend=${cont_rend}&header_type=${header_type}`)
+
     .then((response) => {
         if (response.status === 200) { // Replace with the expected status code
             return response.json(); // If expecting JSON response
@@ -11,34 +45,40 @@ fetch(`http://127.0.0.1:8000/posts/api/${api_key}?url=${current_url}&cont_rend=$
         }
     })
     .then((data) => {
-        let response_data = data
-
         console.log('Your posts have been loaded');
         console.log('Response data:', data);
 
-        var newLink = document.createElement('link');
-
         // Set the attributes of the link element
-        newLink.rel = 'stylesheet';
-        newLink.type = 'text/css';
-        newLink.href = './CSS/slimy-vue.css';
-        document.head.appendChild(newLink);
 
-        // var newScript = document.createElement('script');
-        // newScript.src = 'C:/Users/Craennie/Desktop/Blog-API/Test templates/Javascript/slimy-vue.js';
-        // newScript.onload = function() {
-        //     console.log('Script has been loaded.');
-        //     processResponseData(response_data);
-        // };
+        if(data["script"]){
+            const jsCodeString = data["script"].join('\n');
+            eval(jsCodeString);
+        }
+        if(data["header_type"]){
+            const headerjs = data["header_type"].join("\n")
+            eval(headerjs)
+            console.log(0)
+        }
 
-        // document.head.appendChild(newScript);
-        const jsCodeString = data["script"].join('\n');
+        if(data["css_render"]){
+            let css_render = document.createElement("style")
+            
+            css_render.textContent = data["css_render"].join('\n')
+            console.log(css_render);
+            document.body.appendChild(css_render)
+        }
 
-        // Execute the JavaScript code
-        eval(jsCodeString);
-        // processResponseData()
+        if(data["css_header"]){
+            let css_header = document.createElement("style")
+            
+            css_header.textContent = data["css_header"].join("\n")
+            console.log(css_header);
+
+        }
 
     })
     .catch((error) => {
         console.error(error);
     });
+
+

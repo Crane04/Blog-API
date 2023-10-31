@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Management</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .btn-primary{
+            background-color: #075e54;
+            border: 2px solid #075e54;
+        }
+        @media(max-width:785px){
+            body{
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'extensions/nav.html' %}
+    {% for message in messages %}
+        <div class="alert alert-success" role="alert" id="editor-empty-alert">
+    {{ message }}
+</div>
+{% endfor %}
+<div class="container mt-5">
+    <h1>API Management</h1>
+    <div class="container mt-5">
+        
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>Your API Key</h2>
+                    </div>
+                    <div class="col-md-12">
+                        <input type="text" id="apiKey" class="form-control" value="{{ api_key }}" readonly><br>
+                        <button class="btn btn-primary" id="copyApiKey">Copy API Key</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h2>API Information</h2>
+                <form id="apiInfoForm" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="homePage">Home Page URL:</label>
+                        <input type="text" class="form-control" id="homePage" name = "homePage" placeholder="Enter Home Page URL" value = "{{ user_sites.home_page }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="blogPage">Blog Page URL:</label>
+                        <input type="text" class="form-control" id="blogPage" name = "blogPage" placeholder="Enter Blog Page URL" value = "{{ user_sites.blog_page }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="individualPostPage">Individual Post Page URL:</label>
+                        <input type="text" class="form-control" id="individualPostPage" name="individualPostPage" placeholder="Enter Individual Post Page URL" value = "{{ user_sites.individual_blog_post }}">
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="update-sites">Update Information</button>
+    
+                </form>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        const active_link = $(".nav-link")[1]
+        active_link.className = "nav-link active"
+
+        $("#copyApiKey").click(function () {
+            var copyText = document.getElementById("apiKey");
+            
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // For mobile devices
+
+            // Copy the text inside the text field
+            navigator.clipboard.writeText(copyText.value);
+                        
+        });
+    });
+
+
+</script>
+</body>
+</html>

@@ -12,9 +12,8 @@ from rest_framework import status
 from rest_framework.parsers import MultiPartParser, FormParser
 from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAdminUser, BasePermission, SAFE_METHODS, IsAuthenticated
-from app.models import *
 from userprofile.models import Token
-from app.models import Scripts
+from app.models import Scripts, CSS, UserSites
 
 
 class RestrictAccess(BasePermission):
@@ -36,6 +35,7 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
     
 
     def get(self, request:Request, api_key, *args, **kwargs):
+        print(0)
         # Get user Token
         token = get_object_or_404(Token, key = api_key)
 
@@ -44,20 +44,31 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
       
         requesting_url = request.GET.get("url")
         cont_rend = request.GET.get("cont_rend")
+        header_type = request.GET.get("header_type")
 
         try:
             script = get_object_or_404(Scripts, name = cont_rend)
+            if CSS.objects.filter(name = cont_rend).exists():
+                css_render = CSS.objects.get(name = cont_rend)
         except:pass
 
-        print(script.script)
+        try:
+            header_type = get_object_or_404(Scripts, name = header_type)
+            if CSS.objects.filter(name = header_type).exists():
+                css_header = CSS.objects.get(name = header_type)
+        except:pass
+
         user_urls = get_object_or_404(UserSites, user = token.user)
 
         # Remove queries from requesting_url in home or blog page
 
         requesting_url_homeblog = requesting_url.split("?")[0]
 
+        print(requesting_url_homeblog)
+        print(user_urls.home_page)
+        
         # Filter Posts
-        if requesting_url_homeblog == user_urls.blog_page:
+        if  user_urls.blog_page in requesting_url_homeblog:
             # All Posts
 
             data = Post.objects.filter(creator = user)
@@ -69,14 +80,27 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
                 "posts": serialized_data.data,
                 "individual_page": user_urls.individual_blog_post
             }
-            if cont_rend:
+            try:
                 response_data["script"] = script.script
+            except: pass
+
+            try:
+                response_data["css_render"] = css_render.css_file
+            except: pass
+
+            try:
+                response_data["header_type"] = header_type.script
+            except: pass
+
+            try:
+                response_data["css_header"] = css_header.css_file
+            except: pass
 
             return Response(
                 response_data
             )
 
-        elif requesting_url_homeblog == user_urls.home_page:
+        elif user_urls.home_page in requesting_url_homeblog:
             # Only Featured Posts
 
 
@@ -89,22 +113,51 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
                 "posts": serialized_data.data,
                 "individual_page": user_urls.individual_blog_post
             }
-            if cont_rend:
+            try:
                 response_data["script"] = script.script
-                
+            except: pass
+
+            try:
+                response_data["css_render"] = css_render.css_file
+            except:pass
+
+            try:
+                response_data["header_type"] = header_type.script
+            except: pass
+
+            try:
+                response_data["css_header"] = css_header.css_file
+            except: pass
             return Response(
                 response_data
             )
 
-        elif requesting_url.split("?id=")[0] == user_urls.individual_blog_post:
+        elif user_urls.individual_blog_post in requesting_url.split("?id=")[0]:
             # The Id in the Post will be gotten and used here
 
-            self.queryset = get_list_or_404(Post, custom_id = requesting_url.split("?id=")[1])
+            data = get_list_or_404(Post, custom_id = requesting_url.split("?id=")[1])
+            serialized_data = PostSerializer(data = data, many = True)
+            serialized_data.is_valid()
 
-        elif requesting_url == user_urls.admin_page:
+            response_data = {
+                "post": serialized_data.data
+            }
+            if cont_rend:
+                response_data["script"] = script.script
 
-            print(self.request.user, token.user, token.key)
-            self.queryset = Post.objects.filter(creator = user)
+            if header_type:
+                response_data["header_type"] = header_type.script
+
+            return Response(
+                response_data
+            )
+
+        else:
+            return Response({
+                "error": "Can't fetch your data"
+            }, status=status.HTTP_404_NOT_FOUND)
+
+
 
         return self.list(request, *args, **kwargs)
 
