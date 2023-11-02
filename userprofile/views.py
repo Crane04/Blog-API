@@ -10,6 +10,7 @@ from django.views import View
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+import re
 # Create your views here.
 
 class LoginView(View):
@@ -48,19 +49,21 @@ class SignUpView(View):
             messages.error(request, "Passwords don't match!")
             return redirect("/accounts/signup")
         else:
-            if User.objects.filter(email = email).exists():
-                messages.error(request, "This email already exists")
-                return redirect("/accounts/signup")
-            elif User.objects.filter(username = username).exists():
-                messages.error(request, "User already exists")
-            elif User.objects.filter(email = email).exists() == False and User.objects.filter(username = username).exists() == False:
-                user = User.objects.create(username = username, email = email, password= password)
-                token = Token.objects.create(user = user)
-                user.save()
-                token.save()
-                return redirect("/accounts/login")
+            if len(password) >= 6 and re.search(r'[A-Z]', password) and re.search(r'[a-z]', password) and re.search(r'[^A-Za-z0-9]', password):
+
+                if User.objects.filter(email = email).exists():
+                    messages.error(request, "This email already exists")
+                    return redirect("/accounts/signup")
+                elif User.objects.filter(username = username).exists():
+                    messages.error(request, "User already exists")
+                elif User.objects.filter(email = email).exists() == False and User.objects.filter(username = username).exists() == False:
+                    user = User.objects.create(username = username, email = email, password= password)
+                    token = Token.objects.create(user = user)
+                    user.save()
+                    token.save()
+                    return redirect("/accounts/login")
             else:
-                messages.error(request, "An error occured!")
+                messages.error(request, "Password must contain atleast 6 characters, 1 upper, lowercase and a special character")
                 return redirect("/accounts/signup")
 
 class LogoutView(View):

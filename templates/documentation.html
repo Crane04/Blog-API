@@ -43,6 +43,13 @@
             word-wrap: break-word;
             width: fit-content;
         }
+        code{
+            border-left: 3px solid #007BFF;
+            padding-left: 10px; 
+            background-color: #f7f7f7; 
+            display: block;
+            margin-right: 10px;
+        }
         /* Responsive adjustments */
         @media (max-width: 768px) {
             #sidenav {
@@ -86,13 +93,13 @@
                 <a class="nav-link" href="#intro">Introduction</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#section2">Account</a>
+                <a class="nav-link" href="#account">Account</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#section3">Endpoint 3</a>
+                <a class="nav-link" href="#start">Start Project</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#section3">Endpoint 3</a>
+                <a class="nav-link" href="#manual">Endpoint 3</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#section3">Endpoint 3</a>
@@ -141,62 +148,73 @@
         </section>
 
         <!-- Section 2: Endpoint 2 -->
-        <section id="section2">
+        <section id="account">
             <h1>Set Up yor Account</h1>
-            <p>Here is a brief description of what this API endpoint does.</p>
-            <h2>Request</h2>
-            <p>Include details about the request, such as HTTP method, endpoint URL, and any required parameters.</p>
-            <pre><code style="border-left: 3px solid #007BFF; padding-left: 10px; background-color: #f7f7f7; display: block;">
-POST /api/endpoint2
-Content-Type: application/json
+            <p>Create an Account for free  <a href="/accounts/signup">here</a> </p>
+            <p>You can now head to your <a href="/dashboard/admin">dashboard</a> and manage your posts</p>
+            <p>You will also need to set up your Site Urls in the <a href="/dashboard/api">API page</a>; you API Key is also there</p>
+            <h3>Site URLS</h3>
+            <b><u>Home Page</u></b>
+            <p>This is the Page where you'll have only your Featured Posts - these are posts that makes users know what to expect from your Blog.</p>
+            <p>You will be able to set if each Post is featured in your <a href="/dashboard/admin">Admin Dashboard</a></p>
 
-{
-    "data": "Some data for Endpoint 2"
-}
-</code></pre>
-            <h2>Response</h2>
-            <p>Provide information about the response, including status codes and sample response data.</p>
-            <pre><code style="border-left: 3px solid #007BFF; padding-left: 10px; background-color: #f7f7f7; display: block;">
-HTTP/1.1 201 Created
-Content-Type: application/json
+            <b><u>Blog Page</u></b>
+            <p>This is the Page where all your posts are rendered - featured or unfeatured</p>
 
-{
-    "message": "Endpoint 2 data has been created",
-    "id": 123
+            <b><u>Individual Post Page</u></b>
+            <p>This is where your single Posts are rendered; Each post has an unique ID. This ID must be included in the url.</p>
+            <pre><code>localhost:8000/post?id=mypost7823</code></pre>
+
+            <h1 id="start">Start Project</h1>
+            <p>Create a script that contains the following; and place it in the head section of your HTML code</p>
+            <pre><code>
+bloggit_conf = {
+    "api_key": "YOUR_API_KEY_HERE", // This is the only compulsory field
+    "preloader": "veron"
+    "cont_rend": "slimy-vue", // Allows you to make use of our existong template to render your Post(s)
+    "header":{ // Makes you use an existing Navigation Bar
+        "type": "milky-way", // Check our other navigation bar types the next paragraph
+        "brand_name": "Craennie", // This is the name that will appear on the navigation bar
+        "links":{
+            "Home", "/home",
+            "Contact", "/contact",
+            // Include others
+        }
+    }
 }
-</code></pre>
+            </code></pre>
+            <p>Then, include the following just below the script you've created.</p>
+            <pre><code>
+&lt;script src = "path/to/myscript.js"&gt;&lt;/script&gt;
+            </code></pre>
+            <p>These configurations will be just enough to get you started.</p>
+            <b>Preloader</b>
+            <p>Options: veron, </p>
+            <b>Cont Rend</b>
+            <p>Options: slimy-vue,</p>
+            <b>Header > type</b>
+            <p>Options: milky-way, </p>
+ 
+           </section>
+        <section id="manual">
+            <h1>Manual Fetch</h1>
+            <p>While you can make use of the above </p>
         </section>
 
-        <!-- Section 3: Endpoint 3 -->
-        <section id="section3">
-            <h1>Endpoint 3</h1>
-            <p>Here is a brief description of what this API endpoint does.</p>
-            <h2>Request</h2>
-            <p>Include details about the request, such as HTTP method, endpoint URL, and any required parameters.</p>
-            <pre><code style="border-left: 3px solid #007BFF; padding-left: 10px; background-color: #f7f7f7; display: block;">
-PUT /api/endpoint3/123
-Content-Type: application/json
 
-{
-    "data": "Updated data for Endpoint 3"
-}
-</code></pre>
-            <h2>Response</h2>
-            <p>Provide information about the response, including status codes and sample response data.</p>
-            <pre><code style="border-left: 3px solid #007BFF; padding-left: 10px; background-color: #f7f7f7; display: block;">
-HTTP/1.1 200 OK
-Content-Type: application/json
 
-{
-    "message": "Endpoint 3 data has been updated",
-    "id": 123
-}
-</code></pre>
-        </section>
 
-        <!-- Add more sections for additional endpoints following the same structure -->
-    </div>
 
+
+
+
+
+
+
+
+
+
+           
     <!-- Bootstrap Scripts -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>

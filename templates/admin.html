@@ -36,6 +36,15 @@
             background-color: #075e54;
             color: white !important;
         }
+        td a{
+            padding-left: 10px;
+            padding-right: 10px;
+            text-decoration: none;
+        }
+        td a:hover{
+            text-decoration: none;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -55,13 +64,12 @@
             <button id="create-post-btn" onclick="toggleSection('create-post')">Create Post</button>
             <button id="manage-post-btn" onclick="toggleSection('manage-post')">Manage Posts</button>
         </section>
-<!-- Inside the body section -->
 
         <!-- Create Post Section -->
         <section id="create-post" class="form-section active">
-            <!-- Inside the body section -->
+            <div class="alert alert-success status_post" style="display: none;" role="alert" id="editor-empty-alert"></div>
             {% for message in messages %}
-                <div class="alert alert-success" role="alert" id="editor-empty-alert">
+                <div class="alert alert-success"  role="alert" id="editor-empty-alert">
             {{ message }}
             </div>
             {% endfor %}
@@ -120,14 +128,15 @@
                             <td class="numbering"></td>
                             <td>{{ post.title }}</td>
                             <td>{{ post.time }}</td>
+
+                                <td><a href="edit/{{ post.custom_id }}" class="set-btn" id="dp{{ post.custom_id }}">Edit</a></td>
                             <form action="" method="post">
                                 {% csrf_token %}
-                                <td id="dp{{ post.custom_id }}"><button class="set-btn" id = "{{ post.custom_id }}" onclick="editPost('{{ post.custom_id }}')">Edit</button></td>
-                            </form>
 
-                                {% csrf_token %}
-                                <td><button class="set-btn" onclick="deletePost('{{ post.custom_id }}')">Delete</button></td>
-                    
+                                    <input type="hidden" name="delete_id" value="{{ post.custom_id }}">
+                                    <td id="dp{{ post.custom_id }}"><button class="set-btn" id = "{{ post.custom_id }}" name="deletePost">Delete</button></td>
+
+                            </form>
                             <td><input type="checkbox" {% if post.publish == True %} checked {% endif %}  disabled></td>
                             <td><input type="checkbox" {% if post.featured == True %} checked {% endif %}  disabled></td>
                         </tr>
@@ -161,29 +170,9 @@
         }
         numbering_posts()
 
-
-    function deletePost(post_id) {
-        if(confirm("Are you sure you want to delete this post?")){
-            const apiUrl = 'http://127.0.0.1:8000/posts/api/' + post_id;
-            const headers = new Headers();
-            headers.append('X-CSRFToken', getCookie('csrftoken')); // Get the CSRF token from cookies
-
-            fetch(apiUrl, {
-                method: 'DELETE',
-                headers: headers,
-            })
-                .then(response => {
-                    console.log(response.ok)
-                    console.log(document.getElementById("dp"+post_id).parentElement.parentElement)
-                    document.getElementById("dp"+post_id).parentElement.remove()
-                    numbering_posts()
-                })
-                .then(data => {
-                    // Handle the response data
-
-                });
-        }
-    }
+function editPost(id){
+    location
+}
 
 function getCookie(name) {
     const value = `; ${document.cookie}`;
@@ -191,6 +180,25 @@ function getCookie(name) {
     if (parts.length === 2) return parts.pop().split(';').shift();
 }
 
+document.getElementById("make-post").addEventListener("click", function(e){
+
+    // Function to check if Summernote is empty
+    function isSummernoteEmpty() {
+        var content = $('#content').summernote('code').trim();
+        return content === '' || content === '<p><br></p>';
+    }
+
+        if (isSummernoteEmpty()) {
+            e.preventDefault()
+            document.querySelector('.status_post').innerText = "Content field can't be empty!"
+            document.querySelector('.status_post').style.display = "block"
+
+            setTimeout(() => {
+                
+            document.querySelector('.status_post').style.display = "none"
+            }, 3000);
+        } 
+})
     </script>
 </body>
 </html>

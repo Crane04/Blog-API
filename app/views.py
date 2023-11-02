@@ -20,41 +20,47 @@ class AdminPageView(View):
 
     def post(self, request, **kwargs):
         # Define the collected data
+        if "submitpost" in request.POST:
+            title = request.POST["title"]
+            content = request.POST.get("content", "")
 
-        title = request.POST["title"]
-        content = request.POST["content"]
-        # if content is None or content == None or content.strip() is None or content.strip() == '<p><br></p>':
-        #     messages.info(request, 'Summernote editor is empty')
-        #     # return redirect("/dashboard/admin")
+            if not content.strip() or content is None or content == None or content.strip() is None or content.strip() == '<p><br></p>':
+                messages.info(request, 'Summernote editor is empty')
+                return redirect("/dashboard/admin")
 
+            if "publish" in request.POST:
+                publish = True
+            else:
+                publish = False
 
-        if "publish" in request.POST:
-            publish = True
-        else:
-            publish = False
+            if "featured" in request.POST:
+                featured = True
+            else:
+                featured = False
 
-        if "featured" in request.POST:
-            featured = True
-        else:
-            featured = False
+            create_post = Post.objects.create(
+                creator = request.user,
+                title = title,
+                body= content,
+                publish = publish,
+                featured = featured
+            )
 
-        create_post = Post.objects.create(
-            creator = request.user,
-            title = title,
-            body= content,
-            publish = publish,
-            featured = featured
-        )
+            if request.FILES:
+                image = request.FILES["image"]
+                create_post.image = image
+            create_post.save()
 
-        if request.FILES:
-            image = request.FILES["image"]
-            create_post.image = image
-        create_post.save()
+            messages.info(request, "You've successfully created this Post!")
 
-        messages.info(request, "You've successfully created this Post!")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        elif "deletePost" in request.POST:
+            post_id = request.POST["delete_id"]
+            post_ = get_object_or_404(Post, custom_id = post_id, creator = request.user)
+            post_.delete()
+            messages.info(request, "You've successfully deleted this Post!")
 
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 class PostEditView(View):
 
@@ -67,38 +73,45 @@ class PostEditView(View):
         return render(request, "edit-post.html", context)
 
     def post(self, request, post_id, **kwargs):
-    
-        post_ = get_object_or_404(Post, custom_id = post_id, creator = request.user)
+        if "submitpost" in request.POST:
+            post_ = get_object_or_404(Post, custom_id = post_id, creator = request.user)
 
-        post_.title = request.POST["title"]
-        post_.body = request.POST["content"]
-        # if content is None or content == None or content.strip() is None or content.strip() == '<p><br></p>':
-        #     messages.info(request, 'Summernote editor is empty')
-        #     # return redirect("/dashboard/admin")
+            post_.title = request.POST["title"]
+            content = request.POST.get("content", "")
 
+            if not content.strip() or content is None or content == None or content.strip() is None or content.strip() == '<p><br></p>':
+                messages.info(request, 'Summernote editor is empty')
+                return redirect("/dashboard/admin")
 
-        if "publish" in request.POST:
+            post_.body = content
 
-            publish = True
-        else:
-            publish = False
+            if "publish" in request.POST:
 
-        if "featured" in request.POST:
-            featured = True
-        else:
-            featured = False
+                publish = True
+            else:
+                publish = False
 
-        post_.publish = publish
-        post_.featured = featured
+            if "featured" in request.POST:
+                featured = True
+            else:
+                featured = False
 
-        if request.FILES:
-            image = request.FILES["image"]
-            post_.image = image
-        post_.save()
+            post_.publish = publish
+            post_.featured = featured
 
-        messages.info(request, "You've successfully updated this Post!")
+            if request.FILES:
+                image = request.FILES["image"]
+                post_.image = image
+            post_.save()
 
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            messages.info(request, "You've successfully updated this Post!")
+
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        
+        elif "deletePost" in request.POST:
+            post_id = request.POST["delete_id"]
+            post_ = get_object_or_404(Post, custom_id = post_id, creator = request.user)
+            post_.delete()
 
 
 class DocumentationView(View):
@@ -133,6 +146,7 @@ class ApiPageView(View):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
+        
         try:
             if request.method == "POST":
                 print(0)

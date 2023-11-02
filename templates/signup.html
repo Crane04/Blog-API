@@ -94,11 +94,12 @@
     </div>
     <div class="container">
         <div class="login-image">
-            <img src="C:\Users\Craennie\Desktop\Blog-API\Test templates\Images\human.jpeg" alt="Login Image">
+            <img src="{% static 'images/human.jpeg' %}" alt="Login Image">
         </div>
         <div class="login-container">
-            <h2>Login</h2>
+            <h2>SignUp</h2>
             <form method="post">
+                <div class="alert alert-warning status_post" role="alert" id="editor-empty-alert" style="display: none;"></div>
                 {% csrf_token %}
                 {% for message in messages %}
                 <div class="alert alert-warning" role="alert" id="editor-empty-alert">{{ message }}</div>
@@ -113,17 +114,71 @@
                 </div>
                 <div class="form-group">
                     <label for="password">Password:</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Create Password" required>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Create Password" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).{6,}$" required>
                 </div>
                 <div class="form-group">
                     <label for="password2">Password:</label>
-                    <input type="password" class="form-control" id="password2" name="password2" placeholder="Confirm Password" required>
+                    <input type="password" class="form-control" id="password2" name="password2" placeholder="Confirm Password" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).{6,}$" required>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Submit</button>
             </form>
+            <p style="color:#075e54; text-decoration: underline;"> <a href="/accounts/login">Login</a> </p>
         </div>
     </div>
 
+    <script>
+        document.querySelector("button").addEventListener("click", function(e){
+            const password = document.getElementById('password').value;
+            const password2 = document.getElementById('password2').value;
+            if(password === password2){
+                if (password.length < 6 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[^A-Za-z0-9]/.test(password)){
+                e.preventDefault()
+                document.querySelector('.status_post').innerText = "Password must contain atleast 6 characters, 1 upper, lowercase and a special character"
+                document.querySelector('.status_post').style.display = "block"
+
+                setTimeout(() => {
+                    
+                document.querySelector('.status_post').style.display = "none"
+                }, 4000);
+                
+                }
+            }else{
+                e.preventDefault()
+                document.querySelector('.status_post').innerText = "Passwords don't match!"
+                document.querySelector('.status_post').style.display = "block"
+
+                setTimeout(() => {
+                    
+                document.querySelector('.status_post').style.display = "none"
+                }, 3000);
+                }
+        })
+        function isStrongPassword(password) {
+            // Check for a minimum length of 6 characters
+            if (password.length < 6) {
+                return false;
+            }
+
+            // Check for at least one uppercase letter
+            if (!/[A-Z]/.test(password)) {
+                return false;
+            }
+
+            // Check for at least one lowercase letter
+            if (!/[a-z]/.test(password)) {
+                return false;
+            }
+
+            // Check for at least one special character (not alphanumeric)
+            if (!/[^A-Za-z0-9]/.test(password)) {
+                return false;
+            }
+
+            // If all checks pass, the password is strong
+            return true;
+        }
+
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

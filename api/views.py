@@ -162,7 +162,6 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
         return self.list(request, *args, **kwargs)
 
 
-
 class PostRetrieveUpdateDeleteView(RetrieveUpdateDestroyAPIView):
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated, RestrictAccess]
