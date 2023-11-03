@@ -157,8 +157,6 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
                 "error": "Can't fetch your data"
             }, status=status.HTTP_404_NOT_FOUND)
 
-
-
         return self.list(request, *args, **kwargs)
 
 

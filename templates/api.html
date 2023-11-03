@@ -17,11 +17,14 @@
 </head>
 <body>
     {% include 'extensions/nav.html' %}
+    <div class="alert alert-success status_post" role="alert" id="editor-empty-alert" style="display: none;">
+        
+    </div>
     {% for message in messages %}
         <div class="alert alert-success" role="alert" id="editor-empty-alert">
-    {{ message }}
-</div>
-{% endfor %}
+            {{ message }}
+        </div>
+    {% endfor %}
 <div class="container mt-5">
     <h1>API Management</h1>
     <div class="container mt-5">
@@ -34,12 +37,16 @@
                     </div>
                     <div class="col-md-12">
                         <input type="text" id="apiKey" class="form-control" value="{{ api_key }}" readonly><br>
-                        <button class="btn btn-primary" id="copyApiKey">Copy API Key</button>
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-primary" id="copyApiKey">Copy API Key</button>
+                            <button class="btn btn-primary" name="reset-api-key">Reset API KEY</button>
+                        </form>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
-                <h2>API Information</h2>
+                <h2>Site URLS</h2>
                 <form id="apiInfoForm" method="post">
                     {% csrf_token %}
                     <div class="form-group">
@@ -54,7 +61,7 @@
                         <label for="individualPostPage">Individual Post Page URL:</label>
                         <input type="text" class="form-control" id="individualPostPage" name="individualPostPage" placeholder="Enter Individual Post Page URL" value = "{{ user_sites.individual_blog_post }}">
                     </div>
-                    <button type="submit" class="btn btn-primary" id="update-sites">Update Information</button>
+                    <button type="submit" class="btn btn-primary" id="update-sites" name="update-sites">Update Information</button>
     
                 </form>
             </div>
@@ -71,15 +78,23 @@
         const active_link = $(".nav-link")[1]
         active_link.className = "nav-link active"
 
-        $("#copyApiKey").click(function () {
+        $("#copyApiKey").click(function (e) {
+            e.preventDefault()
             var copyText = document.getElementById("apiKey");
             
             copyText.select();
             copyText.setSelectionRange(0, 99999); // For mobile devices
-
+            
             // Copy the text inside the text field
             navigator.clipboard.writeText(copyText.value);
-                        
+            document.querySelector('.status_post').innerText = "Copied!"
+
+            document.querySelector('.status_post').style.display = "block"
+
+            setTimeout(() => {
+                
+            document.querySelector('.status_post').style.display = "none"
+            }, 4000);
         });
     });
 

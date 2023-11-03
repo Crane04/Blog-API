@@ -1,4 +1,4 @@
-const blogit = document.getElementById("blogit-container")
+const bloggit = document.getElementById("bloggit-container")
 
 // function processResponseData(data){
     data["posts"].forEach(function(parameter){
@@ -27,7 +27,7 @@ const blogit = document.getElementById("blogit-container")
                 </div>
             </div>
             `
-            blogit.appendChild(post_container)
+            bloggit.appendChild(post_container)
         }else{
             post_container.innerHTML = `
         
@@ -41,7 +41,7 @@ const blogit = document.getElementById("blogit-container")
                     </div>
                 </div>
             `
-            blogit.appendChild(post_container)
+            bloggit.appendChild(post_container)
         }
     
     

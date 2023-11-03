@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog Page</title>
+    <style>
+
+    </style>
     <script> 
         const bloggit_conf = {
             "api_key": "7070aa3bfb7a4f6f8266fa44180d4aaf",
-            "cont_rend":"slimy-vue",
+            "preloader": "",
+            "cont_rend":"classic",
             "header": {
                 "type": "milky-way",
                 "brand_name": "Craennie's Blog",
@@ -22,36 +26,14 @@
     <script src="./Javascript/home_and_blog.js"></script>
 </head>
 <body>
+    <div id="bloggit-preloader">
+
+    </div>
 <section id="bloggit-header">
 
 </section>
 
-    <section id="blogit-container">
-        <section class="post">
-            <div class="post-image">
-                <img src="C:\Users\Craennie\Desktop\My Portfolio\static\assets\blog\email.png" alt="Post Image 1">
-            </div>
-            <div class="post-content">
-                <h2>Post Title 1</h2>
-                <p>This is  ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <div class="read-more">
-                    <a href="#">Read More</a>
-                </div>
-            </div>
-        </section>
-
-        <div class="post">
-            <div class="post-image">
-                <img src="C:\Users\Craennie\Desktop\My Portfolio\static\assets\blog\myImage.png" alt="Post Image 2">
-            </div>
-            <div class="post-content">
-                <h2>Post Title 2</h2>
-                <p>This is the content of the second blog post. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                <div class="read-more">
-                    <a href="#">Read More</a>
-                </div>
-            </div>
-        </div>
+    <section id="bloggit-container">
 
         <!-- Add more posts as needed -->
 

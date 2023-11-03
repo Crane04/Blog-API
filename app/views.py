@@ -6,6 +6,7 @@ from api.models import Post
 from django.contrib import messages
 from userprofile.models import Token
 from app.models import UserSites
+import uuid
 
 # Create your views here.
 
@@ -149,22 +150,35 @@ class ApiPageView(View):
         
         try:
             if request.method == "POST":
-                print(0)
-                homePage = request.POST["homePage"]
-                print(1)
-                blogPage = request.POST["blogPage"]
-                individualPostPage = request.POST["individualPostPage"]
+                if "update-sites" in request.POST:
+                    homePage = request.POST["homePage"]
 
-                sites = get_object_or_404(UserSites, user = request.user)
+                    blogPage = request.POST["blogPage"]
+                    individualPostPage = request.POST["individualPostPage"]
 
-                sites.home_page = homePage
-                sites.blog_page = blogPage
-                sites.individual_blog_post = individualPostPage
+                    sites = get_object_or_404(UserSites, user = request.user)
 
-                sites.save()
+                    sites.home_page = homePage
+                    sites.blog_page = blogPage
+                    sites.individual_blog_post = individualPostPage
 
-                messages.success(request, "Your site url's have been sucessfully updated!")
-                return redirect("/dashboard/api")
+                    sites.save()
+
+                    messages.success(request, "Your site url's have been sucessfully updated!")
+                    return redirect("/dashboard/api")
+
+                elif "reset-api-key" in request.POST:
+                    token = Token.objects.get(user = request.user)
+                    token.key = str(uuid.uuid4()).replace("-","")
+                    token.save()
+
+                    messages.success(request, "Your API Key has been updated successfully!")
+                    return redirect("/dashboard/api")
+
+                else:
+                    messages.error(request, "Could not complete your request")
+                    return redirect("/dashboard/api")
+
 
         except:
             messages.error(request, "Couldn't update your site urls!")

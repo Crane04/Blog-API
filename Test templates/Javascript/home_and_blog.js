@@ -1,8 +1,56 @@
-// Define Variables
-let current_url = window.location.href
-let api_key = bloggit_conf.api_key
-let cont_rend = bloggit_conf.cont_rend
-let header_type = bloggit_conf.header.type
+// Preloader
+document.addEventListener("DOMContentLoaded", function() {
+    const preloader_view = document.querySelector("#bloggit-preloader");
+    // Define Variables
+    let current_url = window.location.href
+    let api_key = bloggit_conf.api_key
+    let cont_rend = bloggit_conf.cont_rend
+    let header_type = bloggit_conf.header.type
+    
+    if(preloader_view && bloggit_conf.preloader ){
+        let css_style = document.createElement("style")
+        css_style.textContent = `            
+        #bloggit-preloader{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9); 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }`
+          document.head.appendChild(css_style)
+        if (bloggit_conf.preloader === "veron") {
+
+              
+            preloader_view.innerHTML = `        <div id="preloader" class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>`
+        }else if (bloggit_conf.preloader === "loda"){
+            preloader_view.innerHTML = `<div id="preloader" class="spinner-grow text-success" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>`
+        }else if(bloggit_conf.preloader === "growdan"){
+            preloader_view.innerHTML = `<div id="preloader" class="spinner-grow text-danger" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+
+          `
+        }else if(bloggit_conf.preloader === "traffic"){
+            preloader_view.className = "text-center"
+            preloader_view.innerHTML = `   <div class="spinner-grow text-danger" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <div class="spinner-grow text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <div class="spinner-grow text-info" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>>`
+        }
+    }
 
 
 
@@ -75,10 +123,13 @@ fetch(`http://127.0.0.1:8000/posts/api/${api_key}?url=${current_url}&cont_rend=$
             console.log(css_header);
 
         }
-
+        setTimeout(() => {
+            document.getElementById("bloggit-preloader").style.display = "none"
+        }, 2000);
     })
     .catch((error) => {
         console.error(error);
     });
 
 
+});
