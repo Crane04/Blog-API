@@ -27,10 +27,13 @@ class LoginView(View):
         if user is not None:
             auth.login(request, user)
             token, created = Token.objects.get_or_create(user = user)
+            if request.GET.get("next"):
+                return redirect(request.GET.get("next"))
             return redirect("/dashboard/admin")
             
         else:
             messages.info(request, "Credentials don't match")
+            
             return redirect("/accounts/login")
 
 class SignUpView(View):
