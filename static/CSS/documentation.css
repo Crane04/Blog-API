@@ -1,0 +1,101 @@
+body {
+    background-color: #eee;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevent horizontal scrollbars */
+}
+
+.navbar {
+    background-color: #075e54 !important;
+}
+
+#sidenav {
+background-color: #075e54;
+color: white;
+position: fixed;
+top: 50px; /* Adjust the top margin as needed */
+left: 0;
+bottom: 0;
+z-index: 1;
+padding: 20px;
+width: 250px;
+overflow-x: hidden;
+}
+
+
+#sidenav a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 16px;
+    color: white;
+    display: block;
+}
+
+#sidenav a:hover {
+    background-color: #007BFF;
+}
+
+.main-content {
+    margin-left: 250px;
+    word-wrap: break-word;
+    width: calc(100% - 250px); /* Adjust the width to fit the viewport */
+    padding: 20px;
+}
+
+.main-content section {
+    width: 100%;
+}
+
+pre {
+    border-left: 3px solid #007BFF;
+    padding-left: 10px;
+    background-color: #f7f7f7;
+    margin-right: 10px;
+    max-width: 80%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #sidenav {
+        background-color: #075e54;
+        color: white;
+        position: fixed;
+        top: 50px; /* Adjust as needed */
+        left: 0;
+        bottom: 0;
+        z-index: 1;
+        padding: 20px;
+        width: 100%;
+        overflow-x: auto; /* Allow scrolling if content overflows */
+        height: fit-content;
+        text-align: center;
+        border-top: 1px solid #fff;
+    }
+
+    #sidenav ul {
+        display: block;
+        margin-top: 10px;
+        width: 100vw;
+    }
+
+    #sidenav ul li {
+        width: fit-content;
+        display: inline-block;
+        
+    }
+    #sidenav ul li a{
+        padding: 2px;
+    }
+
+    .main-content {
+margin-left: 0;
+max-width: 100%;
+padding: 20px;
+margin-top: 50px; /* Same as the top nav height */
+width: 100vw;
+}
+#intro{
+margin-top: 50px;
+}
+}

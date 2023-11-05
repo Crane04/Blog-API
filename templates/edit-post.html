@@ -8,43 +8,6 @@
     <title>Admin Page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'CSS/admin.css' %}">
-    <style>
-        .header a{
-            color: white;
-        }
-        .header a {
-            text-decoration: none;
-        }
-        .header span{
-            margin-left: 17px;
-        }
-        #logout-link{
-            background-color: #eee;
-            padding-left: 7px;
-            padding-right: 7px;
-            border-radius: 2px;
-        }
-        #logout-link a {
-            color: #075e54;
-        }
-        #logout-link:hover a{
-            background-color: #075e54;
-            color: white !important;
-        }
-        #logout-link:hover {
-            background-color: #075e54;
-            color: white !important;
-        }
-        td a{
-            padding-left: 10px;
-            padding-right: 10px;
-            text-decoration: none;
-        }
-        td a:hover{
-            text-decoration: none;
-            color: #fff;
-        }
-    </style>
 </head>
 <body>
     <section class="header">
@@ -110,54 +73,6 @@
     <!-- <script src = "{% static 'Javascript/admin.js' %}"></script>  -->
     <!--<script src = "{% static 'Javascript/make-post.js' %} "></script> 
     <script src = "{% static 'Javascript/manage-posts.js' %}"></script> -->
-    <script>
-
-        function toggleSection(sectionId) {
-            const sections = document.querySelectorAll('.form-section');
-            sections.forEach(section => section.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
-        }
-
-        function numbering_posts(){
-            const numbering = document.getElementsByClassName("numbering")
-
-            for(let i=0; i < numbering.length; i++){
-                numbering[i].innerText = i + 1
-            }
-
-        }
-        numbering_posts()
-
-
-    function deletePost(post_id) {
-        if(confirm("Are you sure you want to delete this post?")){
-            const apiUrl = 'http://127.0.0.1:8000/posts/api/' + post_id;
-            const headers = new Headers();
-            headers.append('X-CSRFToken', getCookie('csrftoken')); // Get the CSRF token from cookies
-
-            fetch(apiUrl, {
-                method: 'DELETE',
-                headers: headers,
-            })
-                .then(response => {
-                    console.log(response.ok)
-                    console.log(document.getElementById("dp"+post_id).parentElement.parentElement)
-                    document.getElementById("dp"+post_id).parentElement.remove()
-                    numbering_posts()
-                })
-                .then(data => {
-                    // Handle the response data
-
-                });
-        }
-    }
-
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-}
-
-    </script>
+    <script src="{% static 'edit-post.js' %}"></script>
 </body>
 </html>

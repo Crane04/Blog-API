@@ -9,43 +9,7 @@
     <title>Admin Page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'CSS/admin.css' %}">
-    <style>
-        .header a{
-            color: white;
-        }
-        .header a {
-            text-decoration: none;
-        }
-        .header span{
-            margin-left: 17px;
-        }
-        #logout-link{
-            background-color: #eee;
-            padding-left: 7px;
-            padding-right: 7px;
-            border-radius: 2px;
-        }
-        #logout-link a {
-            color: #075e54;
-        }
-        #logout-link:hover a{
-            background-color: #075e54;
-            color: white !important;
-        }
-        #logout-link:hover {
-            background-color: #075e54;
-            color: white !important;
-        }
-        td a{
-            padding-left: 10px;
-            padding-right: 10px;
-            text-decoration: none;
-        }
-        td a:hover{
-            text-decoration: none;
-            color: #fff;
-        }
-    </style>
+
 </head>
 <body>
     <section class="header">
@@ -152,53 +116,5 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
     <script src="{% static  'Javascript/summernote.js' %}"></script>
-    <script>
-
-        function toggleSection(sectionId) {
-            const sections = document.querySelectorAll('.form-section');
-            sections.forEach(section => section.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
-        }
-
-        function numbering_posts(){
-            const numbering = document.getElementsByClassName("numbering")
-
-            for(let i=0; i < numbering.length; i++){
-                numbering[i].innerText = i + 1
-            }
-
-        }
-        numbering_posts()
-
-function editPost(id){
-    location
-}
-
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-}
-
-document.getElementById("make-post").addEventListener("click", function(e){
-
-    // Function to check if Summernote is empty
-    function isSummernoteEmpty() {
-        var content = $('#content').summernote('code').trim();
-        return content === '' || content === '<p><br></p>';
-    }
-
-        if (isSummernoteEmpty()) {
-            e.preventDefault()
-            document.querySelector('.status_post').innerText = "Content field can't be empty!"
-            document.querySelector('.status_post').style.display = "block"
-
-            setTimeout(() => {
-                
-            document.querySelector('.status_post').style.display = "none"
-            }, 3000);
-        } 
-})
-    </script>
 </body>
 </html>

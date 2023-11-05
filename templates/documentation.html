@@ -1,86 +1,14 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <style>
-        /* Custom CSS for responsiveness */
-        .container {
-            padding: 0;
-            width: max-content;
-        }
-        body{
-            background-color: #eee;
-        }
-        .navbar{
-            background-color: #075e54 !important;
-        }
-        #sidenav {
-            background-color: #075e54;
-            color: white;
-            position: fixed;
-            top: 0;
-            margin-top:50px;
-            bottom: 0;
-            z-index: 1;
-            padding: 20px;
-            width: 250px;
-            overflow-x: hidden;
-        }
-        #sidenav a {
-            padding: 10px 15px;
-            text-decoration: none;
-            font-size: 16px;
-            color: white;
-            display: block;
-        }
-        #sidenav a:hover {
-            background-color: #007BFF;
-        }
-        .main-content {
-            margin-left: 270px;
-            word-wrap: break-word;
-            width: fit-content;
-        }
-        code{
-            border-left: 3px solid #007BFF;
-            padding-left: 10px; 
-            background-color: #f7f7f7; 
-            display: block;
-            margin-right: 10px;
-        }
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            #sidenav {
-                width: 100%;
-                position: fixed;
-                height: fit-content;
-                overflow-x: auto;
-                top: 0;                
-                overflow-x: auto;
-                white-space: nowrap;
-                /* margin-bottom: 210px; */
-            }
-            #sidenav ul{
-                display: flex;
-                flex-direction: row !important;
-                margin-top: 10px;
-                flex-wrap: nowrap;
-                /* margin-right: 100px; */
-            }
-            #sidenav ul li{
-                width: fit-content;
-            }
-            
-            .main-content {
-                margin-left: 5px;
-                /* width: 100%; */
-                margin-top: 120px !important;
-            }
-        }
-    </style>
+    
     <title>API Documentation</title>
+    <link rel="stylesheet" href="{% static 'CSS/documentation.css' %}">
 </head>
 <body>
     <!-- Top Navbar -->
@@ -112,7 +40,7 @@
             <p>Here is a brief description about Bloggit!</p>
             <article>
                 <p>
-                    BlogIt stands as a robust content management system designed to
+                    Bloggit! stands as a robust content management system designed to
                      cater to the needs of front-end developers, ensuring that they
                       can create compelling blog websites with little configurations,
                        all without the requirement of intricate backend or database
@@ -120,20 +48,20 @@
                     providing a secure and efficient database to store and manage all your content effortlessly.
                 </p>
                 <p>
-                    One of the standout features of BlogIt is its capacity to streamline
+                    One of the standout features of Bloggit! is its capacity to streamline
                      the creation of dynamic navigation bars. This allows
                       developers to customize their website's menu and improve the overall user experience,
                      all without diving into the complexities of server-side development.
                 </p>
                 <p>
-                    Moreover, BlogIt simplifies the rendering of blog content. It enables
+                    Moreover, Bloggit! simplifies the rendering of blog content. It enables
                      you to effortlessly showcase not only the collective blogs but also
                       individual posts, ensuring a smooth and aesthetically pleasing display. 
-                    With BlogIt, you can give your audience a seamless and engaging
+                    With Bloggit!, you can give your audience a seamless and engaging
                      browsing experience while maintaining full control over your website's content.
                 </p>
                 <p>
-                    In summary, BlogIt is the go-to choice for developers who
+                    In summary, Bloggit! is the go-to choice for developers who
                      seek a hassle-free and efficient means of creating and managing
                       blog websites with little configurations, making it easier
                        than ever to share their ideas and stories with the world.

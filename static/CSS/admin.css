@@ -64,3 +64,39 @@ width: fit-content;
 height: fit-content;
 margin-bottom: 12px;
 }
+
+.header a{
+    color: white;
+}
+.header a {
+    text-decoration: none;
+}
+.header span{
+    margin-left: 17px;
+}
+#logout-link{
+    background-color: #eee;
+    padding-left: 7px;
+    padding-right: 7px;
+    border-radius: 2px;
+}
+#logout-link a {
+    color: #075e54;
+}
+#logout-link:hover a{
+    background-color: #075e54;
+    color: white !important;
+}
+#logout-link:hover {
+    background-color: #075e54;
+    color: white !important;
+}
+td a{
+    padding-left: 10px;
+    padding-right: 10px;
+    text-decoration: none;
+}
+td a:hover{
+    text-decoration: none;
+    color: #fff;
+}
