@@ -170,9 +170,11 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
                 return Response(response_data, status = status.HTTP_404_NOT_FOUND)
 
         else:
-            return Response({
-                "error": "Can't fetch your data"
-            }, status=status.HTTP_404_NOT_FOUND)
+            response_data = {
+                "unregistered_site_url": "Not Found"
+            }
+            print(response_data)
+            return Response(response_data, status = status.HTTP_401_UNAUTHORIZED)
 
         return self.list(request, *args, **kwargs)
 

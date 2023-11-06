@@ -102,6 +102,10 @@ fetch(`http://127.0.0.1:8000/posts/api/${api_key}?url=${current_url}&cont_rend=$
         else if(response.status === 404){
             return response.json()
         }
+        
+        else if(response.status === 401){
+            return response.json();
+        }
         else {
             throw new Error(`Couldn't fetch your data: ${response.data}`);
         }
@@ -123,6 +127,23 @@ fetch(`http://127.0.0.1:8000/posts/api/${api_key}?url=${current_url}&cont_rend=$
                 console.log("Error 404, This post doesn't exist!");
             }
         }
+        if (data["unregistered_site_url"]){
+            console.log(data);
+            if(bloggit_conf["cont_rend"]){
+                document.getElementById("bloggit-container").innerHTML = `    <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 text-center mt-5">
+                        <h1 class="display-4">401 - Unauthorized!</h1>
+                        <p class="lead">Sorry, you've not registered this site!</p>
+                        <a href="${data["home"]}" class="btn btn-primary">Register now!</a>
+                    </div>
+                </div>
+            </div>`
+            }else{
+                console.log("Error 404, This post doesn't exist!");
+            }
+        }
+
 
         // Set the attributes of the link element
         bloggit_data = data["posts"]

@@ -8,5 +8,5 @@ urlpatterns = [
     path("documentation", DocumentationView.as_view(), name = "documentaion-page"),
     path("", DocumentationView.as_view()),
     path("dashboard/api", login_required(ApiPageView.as_view())),
-    path("mn", rest)
+    path("aboutme", AboutDevPage.as_view(), name="about-me")
 ]

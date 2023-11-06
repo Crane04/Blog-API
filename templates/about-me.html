@@ -1,0 +1,123 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>About the Developer</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+    <style>
+        body{
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    {% include "extensions/nav.html" %}
+    <div class="container mt-5">
+        
+        <h1>About the Developer</h1>
+        <div class="row">
+            <div class="col-md-4">
+                <img src="{% static 'images\mayowa.jpg' %}" alt="Developer" class="img-fluid rounded-circle">
+            </div>
+            <div class="col-md-8">
+                <p>
+                    Hi, I'm Mayowa, and I'm passionate about coding. 
+                    I specialize in creating APIs and backend projects, and I'm proficient in both Python and JavaScript. 
+                    As a robotics and AI enthusiast, I explore the exciting world of robotics and artificial intelligence. 
+                    Additionally, I've learned machine learning and enjoy working on projects that involve ML applications.
+                </p>
+                <div class="mt-4">
+                    <h2>Connect with Me</h2>
+                    <div class="mt-3">
+                        <a href="https://github.com/crane04" target="_blank"><i class="fab fa-github"></i> GitHub</a><br>
+                        <a href="https://twitter.com/craennie" target="_blank"><i class="fab fa-twitter"></i> Twitter</a><br>
+                        <a href="https://web.facebook.com/profile.php?id=100074315773238" target="_blank"><i class="fab fa-facebook"></i> Facebook</a><br>
+                        <a href="mailto:mayowayusuf3004@gmail.com"><i class="far fa-envelope"></i> Email: mayowayusuf3004@gmail.com</a><br>
+                        <a href="https://wa.me/+2349114081137" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <h2>Previous Projects</h2>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Voting System</h5>
+                    <article class="card-text"><p>
+                        I've developed a comprehensive voting system that allows users to cast their votes securely. 
+                        The system also features email notifications to confirm closed polls and integrates seamlessly with payment options for cash polls. 
+                        This ensures a smooth and efficient voting experience.
+                    </p>
+                <p>Check source code at <a href="https://github.com/Crane04/Voting-System">https://github.com/Crane04/Voting-System</a></p></article>
+                </div>
+            </div>
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h5 class="card-title">Examination Portal</h5>
+                    <article class="card-text">
+                        <p>
+                            I've developed an Examination Portal with a multifaceted approach to support various aspects of exam preparation and administration. Users can engage in test-taking activities, both for practice and official exams. 
+                            The platform hosts and facilitates the participation in exams, ensuring a seamless and efficient experience.
+                        </p>
+                        <p>
+                            In addition to exam-centric features, the portal includes a robust Q&A forum where users can post questions 
+                            and receive responses from their peers or educators. 
+                            This collaborative environment promotes knowledge sharing and addresses doubts effectively.
+                        </p>
+                        <p>
+                            To aid users in tracking their progress and performance, a user-friendly dashboard has been integrated into the portal.
+                             It provides insights into their strengths and weaknesses, enabling them to focus on areas that require improvement.
+                        </p>
+                        <p>
+                            It's worth noting that the portal is an ongoing project, 
+                            with continuous development efforts aimed at enhancing its functionality and user experience. 
+                            The goal is to launch the platform at LASU, 
+                            catering to the educational needs of students and educators while promoting an enriching learning environment.
+                        </p>
+                    </article>
+                </div>
+            </div>
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h5 class="card-title">Anonymous Messanger</h5>
+                    <article class="card-text">
+                        <p>
+                            The Anonymous Messenger is designed to facilitate discreet and confidential communication. 
+                            Users can send messages to others while remaining completely anonymous. 
+                            This platform prioritizes privacy, enabling open and candid conversations without revealing the sender's identity. 
+                            It's a secure space for discussions where anonymity is crucial.
+                        </p>
+                        <p>Check it out on <a href="https://annony.pythonanywhere.com/">https://annony.pythonanywhere.com/</a></p>
+                    </article>
+                </div>
+            </div>
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h5 class="card-title">Ticketing Platform</h5>
+                    <article class="card-text">
+                        <p>
+                            The Ticketing Platform is a comprehensive solution for event management and ticket sales. 
+                            Users can easily purchase tickets for various events, and upon successful purchase, 
+                            they receive an email with a unique QR code. This QR code serves as their electronic ticket,
+                            which can be scanned using a custom QR code scanner on the event day, providing a hassle-free entry process.
+                        </p>
+                        <p>
+                            The platform also incorporates secure payment integration through Flutterwave,
+                             ensuring that transactions are smooth and secure. 
+                             This client project aims to streamline event ticketing and enhance the overall experience for both event organizers and attendees. 
+                            Please note that the link to this project cannot be shared due to client confidentiality.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+<br><br>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

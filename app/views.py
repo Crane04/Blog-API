@@ -184,22 +184,9 @@ class ApiPageView(View):
             messages.error(request, "Couldn't update your site urls!")
             return redirect("/dashboard/api")
 
-def rest(request):
-    if request.method == "POST":
-        print(0)
-        homePage = request.POST["homePage"]
-        print(1)
-        blogPage = request.POST["blogPage"]
-        individualPostPage = request.POST["individualPostPage"]
+class AboutDevPage(View):
+    template_name = "about-me.html"
 
-        sites = get_object_or_404(UserSites, user = request.user)
+    def get(self, request, *args, **kwargs):
 
-        sites.home_page = homePage
-        sites.blog_page = blogPage
-        sites.individual_blog_post = individualPostPage
-
-        sites.save()
-        print(1)
-        return JsonResponse({
-            "Success": "Edited successfully"
-        })
+        return render(request, self.template_name)
