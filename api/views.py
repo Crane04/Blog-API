@@ -35,7 +35,7 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
     
 
     def get(self, request:Request, api_key, *args, **kwargs):
-        print(0)
+
         # Get user Token
         token = get_object_or_404(Token, key = api_key)
 
@@ -64,8 +64,6 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
 
         requesting_url_homeblog = requesting_url.split("?")[0]
 
-        print(requesting_url_homeblog)
-        print(user_urls.home_page)
         
         # Filter Posts
         if  user_urls.blog_page in requesting_url_homeblog:
@@ -97,7 +95,7 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
             except: pass
 
             return Response(
-                response_data
+                response_data, status = status.HTTP_200_OK
             )
 
         elif user_urls.home_page in requesting_url_homeblog:
@@ -129,28 +127,47 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
                 response_data["css_header"] = css_header.css_file
             except: pass
             return Response(
-                response_data
+                response_data, status = status.HTTP_200_OK
             )
 
         elif user_urls.individual_blog_post in requesting_url.split("?id=")[0]:
             # The Id in the Post will be gotten and used here
 
-            data = get_list_or_404(Post, custom_id = requesting_url.split("?id=")[1])
-            serialized_data = PostSerializer(data = data, many = True)
-            serialized_data.is_valid()
+            try:
+                data = get_list_or_404(Post, custom_id = requesting_url.split("?id=")[1])
 
-            response_data = {
-                "post": serialized_data.data
-            }
-            if cont_rend:
-                response_data["script"] = script.script
+                serialized_data = PostSerializer(data = data, many = True)
+                serialized_data.is_valid()
 
-            if header_type:
-                response_data["header_type"] = header_type.script
+                response_data = {
+                    "post": serialized_data.data
+                }
+                if cont_rend:
+                    response_data["script"] = script.script
 
-            return Response(
-                response_data
-            )
+                if header_type:
+                    response_data["header_type"] = header_type.script
+
+                return Response(
+                    response_data, status = status.HTTP_200_OK
+                )
+            except:
+                data = None
+                response_data = {
+                    "not_found_details": "Not Found",
+                }
+                try:
+                    response_data["header_type"] = header_type.script
+                except: pass
+
+                try:
+                    response_data["css_header"] = css_header.css_file
+                except: pass
+                try:
+                    response_data["home"] = user_urls.home_page
+                except: pass
+
+                return Response(response_data, status = status.HTTP_404_NOT_FOUND)
 
         else:
             return Response({

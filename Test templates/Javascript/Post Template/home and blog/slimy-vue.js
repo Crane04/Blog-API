@@ -12,7 +12,7 @@ const bloggit = document.getElementById("bloggit-container")
         post_container.className = "post"
 
         if(image){
-            console.log(1);
+
             post_container.innerHTML = `
             
             <div class="post-image">

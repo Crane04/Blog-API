@@ -48,15 +48,22 @@ overflow-x: hidden;
 }
 
 pre {
-    border-left: 3px solid #007BFF;
+    border-left: 3px solid #000;
     padding-left: 10px;
     background-color: #f7f7f7;
     margin-right: 10px;
-    max-width: 80%;
+    max-width: 100%;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+    pre {
+        border-left: 3px solid #007BFF;
+        padding-left: 10px;
+        background-color: #f7f7f7;
+        margin-right: 5px;
+        max-width: 100%;
+    }
     #sidenav {
         background-color: #075e54;
         color: white;
@@ -98,4 +105,5 @@ width: 100vw;
 #intro{
 margin-top: 50px;
 }
+
 }
