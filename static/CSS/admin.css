@@ -100,3 +100,14 @@ td a:hover{
     text-decoration: none;
     color: #fff;
 }
+@media(max-width: 400px){
+    #btns{
+        display: flex !important;
+        justify-content: space-between;
+        font-size: small;
+    }
+    #btns button{
+        max-width: 150px;
+        /* width: fit-content; */
+    }
+}

@@ -8,21 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="{% static 'CSS/admin.css' %}">
     <link rel="shortcut icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
 
 </head>
 <body>
-    <section class="header">
-        <section>
-            <h2><a href="/">Bloggit!</a></h2>
-        </section>
-        <section>
-            <span> {{ request.user.username }}</span>
-            <span id="logout-link"><a href="/accounts/logout">Logout</a></span>
-        </section>
-
-    </section>
+    {% include 'extensions/nav.html' %}
     <section class="container">
 
         <section id="btns">
@@ -91,15 +84,15 @@
                     {% for post in posts %}
                         <tr>
                             <td class="numbering"></td>
-                            <td>{{ post.title }}</td>
-                            <td>{{ post.time }}</td>
+                            <td style="white-space: nowrap;">{{ post.title|truncatewords:5 }}</td>
+                            <td style="white-space: nowrap;">{{ post.time }}</td>
 
                                 <td><a href="edit/{{ post.custom_id }}" class="set-btn" id="dp{{ post.custom_id }}">Edit</a></td>
                             <form action="" method="post">
                                 {% csrf_token %}
 
                                     <input type="hidden" name="delete_id" value="{{ post.custom_id }}">
-                                    <td id="dp{{ post.custom_id }}"><button class="set-btn" id = "{{ post.custom_id }}" name="deletePost">Delete</button></td>
+                                    <td id="dp{{ post.custom_id }}"><button class="set-btn delpostnow" id = "{{ post.custom_id }}" name="deletePost">Delete</button></td>
 
                             </form>
                             <td><input type="checkbox" {% if post.publish == True %} checked {% endif %}  disabled></td>
@@ -109,10 +102,9 @@
                 </tbody>
             </table>
         </section>
-    </section>
-    <script>
-        const api_key = "a954b21e51c809b72b5e68d5a12717ef4e2c5d3a"
-    </script>
+        <script>
+
+        </script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>

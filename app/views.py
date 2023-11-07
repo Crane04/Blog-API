@@ -15,7 +15,7 @@ class AdminPageView(View):
     def get(self, request, **kwargs):
 
         context = {
-            "posts": Post.objects.all() #get_object_or_404(Post, creator = request.user)
+            "posts":  Post.objects.filter(creator = request.user)
         }
         return render(request, "admin.html", context=context)
 
@@ -62,6 +62,8 @@ class AdminPageView(View):
             messages.info(request, "You've successfully deleted this Post!")
 
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        else:
+            messages.info(request, "Couldn't complete this action!")
 
 class PostEditView(View):
 
@@ -109,10 +111,14 @@ class PostEditView(View):
 
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         
-        elif "deletePost" in request.POST:
-            post_id = request.POST["delete_id"]
+        elif "deletepost" in request.POST:
             post_ = get_object_or_404(Post, custom_id = post_id, creator = request.user)
             post_.delete()
+
+            messages.info(request, "You've successfully deleted this Post!")
+            return redirect("/dashboard/admin")
+        else:
+            messages.info(request, "Couldn't complete this action!")
 
 
 class DocumentationView(View):

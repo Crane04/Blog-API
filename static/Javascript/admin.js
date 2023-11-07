@@ -1,14 +1,18 @@
+const delpost = document.querySelectorAll(".delpostnow")
 function toggleSection(sectionId) {
     const sections = document.querySelectorAll('.form-section');
     sections.forEach(section => section.classList.remove('active'));
     document.getElementById(sectionId).classList.add('active');
 }
-function toggleSection(sectionId) {
-    const sections = document.querySelectorAll('.form-section');
-    sections.forEach(section => section.classList.remove('active'));
-    document.getElementById(sectionId).classList.add('active');
+for(let i = 0; i < delpost.length; i++){
+    delpost[i].addEventListener("click", function(e){
+        if(confirm("Are you sure you want to delete")){
+            
+        }else{
+            e.preventDefault()
+        }
+    })
 }
-
 function numbering_posts(){
     const numbering = document.getElementsByClassName("numbering")
 
@@ -18,10 +22,6 @@ function numbering_posts(){
 
 }
 numbering_posts()
-
-function editPost(id){
-location
-}
 
 function getCookie(name) {
 const value = `; ${document.cookie}`;

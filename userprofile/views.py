@@ -11,6 +11,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 import re
+from django.contrib.auth.hashers import make_password
 # Create your views here.
 
 class LoginView(View):
@@ -59,8 +60,10 @@ class SignUpView(View):
                     return redirect("/accounts/signup")
                 elif User.objects.filter(username = username).exists():
                     messages.error(request, "User already exists")
+                    return redirect("/accounts/login")
                 elif User.objects.filter(email = email).exists() == False and User.objects.filter(username = username).exists() == False:
-                    user = User.objects.create(username = username, email = email, password= password)
+                    hashed_password = make_password(password)
+                    user = User.objects.create(username = username, email = email, password= hashed_password)
                     token = Token.objects.create(user = user)
                     user.save()
                     token.save()

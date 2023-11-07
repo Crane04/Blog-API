@@ -9,18 +9,11 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'CSS/admin.css' %}">
     <link rel="shortcut icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <section class="header">
-        <section>
-            <h2><a href="/">Bloggit!</a></h2>
-        </section>
-        <section>
-            <span> {{ request.user.username }}</span>
-            <span id="logout-link"><a href="/accounts/logout">Logout</a></span>
-        </section>
-
-    </section>
+    {% include 'extensions/nav.html' %}
     <section class="container">
 
 <!-- Inside the body section -->
@@ -59,8 +52,11 @@
                     <input type="checkbox" class="form-check-input" id="featured" name="featured" {% if post.featured == True %} checked {% endif %}>
                     <label class="form-check-label" for="featured">Featured</label>
                 </section>
+                <section id="btns">
+                    <button type="submit" class="btn btn-primary" name="submitpost" id="make-post">Edit Post</button>
+                    <button type="submit" class="btn btn-primary" name="deletepost" id="delete-post">Delete Post</button>
+                </section>
 
-                <button type="submit" class="btn btn-primary" name="submitpost" id="make-post">Create Post</button>
             </form>
         </section>
     </section>
@@ -71,6 +67,7 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
     <script src="{% static  'Javascript/summernote.js' %}"></script>
-    <script src="{% static 'edit-post.js' %}"></script>
+    <script src="{% static 'Javascript/edit-post.js' %}"></script>
+    
 </body>
 </html>
