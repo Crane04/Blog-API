@@ -2,7 +2,6 @@ from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import User
 import uuid
-from django_quill.fields import QuillField
 from tinymce.models import HTMLField
 # Create your models here.
 
