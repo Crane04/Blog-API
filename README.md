@@ -8,4 +8,5 @@ Moreover, Bloggit! simplifies the rendering of blog content. It enables you to e
 
 In summary, Bloggit! is the go-to choice for developers who seek a hassle-free and efficient means of creating and managing blog websites with little configurations, making it easier than ever to share their ideas and stories with the world.
 
-The following is the full Documentation on how to use this API.
+Read the full documentation here:
+https://bloggit.pythonanywhere.com
