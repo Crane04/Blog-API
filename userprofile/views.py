@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 import re
 from django.contrib.auth.hashers import make_password
+from app.models import UserSites
 # Create your views here.
 
 class LoginView(View):
@@ -65,8 +66,13 @@ class SignUpView(View):
                     hashed_password = make_password(password)
                     user = User.objects.create(username = username, email = email, password= hashed_password)
                     token = Token.objects.create(user = user)
+                    user_site = UserSites.objects.create(user = user)
+                    user_site.home_page = ""
+                    user_site.blog_page = ""
+                    user_site.individual_blog_post = ""
                     user.save()
                     token.save()
+                    user_site.save()
                     return redirect("/accounts/login")
             else:
                 messages.error(request, "Password must contain atleast 6 characters, 1 upper, lowercase and a special character")
