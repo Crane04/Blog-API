@@ -5,10 +5,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>SignUpPage</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'CSS/account.css' %}">
     <link rel="shortcut icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous">
 </head>
 <body>
     <div class="brand">
@@ -35,74 +36,24 @@
                     <label for="name">Email:</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
                 </div>
-                <div class="form-group">
+                <div class="form-group password-container">
                     <label for="password">Password:</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Create Password" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).{6,}$" required>
+                    <div class="pass-container">
+                        <input type="password" class="form-control password-input" id="password" name="password" placeholder="Enter your password" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).{6,}$"  required>
+                        <i class="fas fa-eye eye-icon" onclick="togglePassword()"></i>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label for="password2">Password:</label>
-                    <input type="password" class="form-control" id="password2" name="password2" placeholder="Confirm Password" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).{6,}$" required>
+                    <label for="password2">Confirm Password:</label>
+                    <input type="password" class="form-control password-input" id="password2" name="password2" placeholder="Confirm Password" required>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                <button id="signup" type="submit" class="btn btn-primary btn-block">Submit</button>
             </form>
             <p style="color:#075e54; text-decoration: underline;"> <a href="/accounts/login">Login</a> </p>
         </div>
     </div>
 
-    <script>
-        document.querySelector("button").addEventListener("click", function(e){
-            const password = document.getElementById('password').value;
-            const password2 = document.getElementById('password2').value;
-            if(password === password2){
-                if (password.length < 6 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[^A-Za-z0-9]/.test(password)){
-                e.preventDefault()
-                document.querySelector('.status_post').innerText = "Password must contain atleast 6 characters, 1 upper, lowercase and a special character"
-                document.querySelector('.status_post').style.display = "block"
-
-                setTimeout(() => {
-                    
-                document.querySelector('.status_post').style.display = "none"
-                }, 4000);
-                
-                }
-            }else{
-                e.preventDefault()
-                document.querySelector('.status_post').innerText = "Passwords don't match!"
-                document.querySelector('.status_post').style.display = "block"
-
-                setTimeout(() => {
-                    
-                document.querySelector('.status_post').style.display = "none"
-                }, 3000);
-                }
-        })
-        function isStrongPassword(password) {
-            // Check for a minimum length of 6 characters
-            if (password.length < 6) {
-                return false;
-            }
-
-            // Check for at least one uppercase letter
-            if (!/[A-Z]/.test(password)) {
-                return false;
-            }
-
-            // Check for at least one lowercase letter
-            if (!/[a-z]/.test(password)) {
-                return false;
-            }
-
-            // Check for at least one special character (not alphanumeric)
-            if (!/[^A-Za-z0-9]/.test(password)) {
-                return false;
-            }
-
-            // If all checks pass, the password is strong
-            return true;
-        }
-
-    </script>
-
+    <script src="{% static 'Javascript/accounts.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

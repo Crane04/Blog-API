@@ -46,6 +46,22 @@ body {
     background-color: #075e54;
     border: 1px solid #075e54;
 }
+.eye-icon {
+    cursor: pointer;
+}
+
+
+.eye-icon:hover {
+    color: #007bff; /* Change color on hover if desired */
+}
+.pass-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.password-container .password-input{
+ width: 85%;
+}
 
 @media (min-width: 768px) {
     .container {
@@ -61,15 +77,21 @@ body {
     .container {
         height: auto;
         flex-direction: column;
+        margin-bottom: 20px;
     }
 
     .login-container {
         width: 80%;
         margin: 10px auto;
+        
     }
 
     .login-image {
         display: flex;
         justify-content: center;
+        width: 320px;
+    }
+    .login-image img{
+        width:fit-content
     }
 }
