@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Page</title>
+    <title>Edit Post</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'CSS/admin.css' %}">
     <link rel="shortcut icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
@@ -43,15 +43,16 @@
                     <input type="file" class="form-control-file" id="image" name="image" accept=".png, .jpg, .jpeg" >
                 </section>
 
+                <section class="form-group">
+                    <label for="category">Category:</label>
+                    <input type="text" class="form-control" id="category" name="category" required value = "{{ post.categories }}">
+                </section>
+
                 <section class="form-check">
                     <input type="checkbox" class="form-check-input" id="publish" name="publish" {% if post.publish == True %} checked {% endif %}>
                     <label class="form-check-label" for="publish">Publish</label>
                 </section>
 
-                <section class="form-check">
-                    <input type="checkbox" class="form-check-input" id="featured" name="featured" {% if post.featured == True %} checked {% endif %}>
-                    <label class="form-check-label" for="featured">Featured</label>
-                </section>
                 <section id="btns">
                     <button type="submit" class="btn btn-primary" name="submitpost" id="make-post">Edit Post</button>
                     <button type="submit" class="btn btn-primary" name="deletepost" id="delete-post">Delete Post</button>

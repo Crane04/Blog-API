@@ -68,8 +68,17 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
         # Filter Posts
         if  user_urls.blog_page in requesting_url_homeblog:
             # All Posts
+            category = request.GET.get("category")
 
-            data = Post.objects.filter(creator = user)
+            if category != "null":
+                
+                data = Post.objects.filter(creator = user, publish = True, categories = category)
+                if data.exists():
+                    data = data
+                else:
+                    data = Post.objects.filter(creator = user, publish = True)    
+            elif category == "null":
+                data = Post.objects.filter(creator = user, publish = True)
             
             serialized_data = PostSerializer(data = data,  many = True)
             serialized_data.is_valid()
@@ -98,37 +107,6 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
                 response_data, status = status.HTTP_200_OK
             )
 
-        elif user_urls.home_page in requesting_url_homeblog:
-            # Only Featured Posts
-
-
-            data = Post.objects.filter(creator = user, featured = True)
-            serialized_data = PostSerializer(data = data,  many = True)
-            serialized_data.is_valid()
-
-
-            response_data = {
-                "posts": serialized_data.data,
-                "individual_page": user_urls.individual_blog_post
-            }
-            try:
-                response_data["script"] = script.script
-            except: pass
-
-            try:
-                response_data["css_render"] = css_render.css_file
-            except:pass
-
-            try:
-                response_data["header_type"] = header_type.script
-            except: pass
-
-            try:
-                response_data["css_header"] = css_header.css_file
-            except: pass
-            return Response(
-                response_data, status = status.HTTP_200_OK
-            )
 
         elif user_urls.individual_blog_post in requesting_url.split("?id=")[0]:
             # The Id in the Post will be gotten and used here

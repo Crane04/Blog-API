@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 class UserSites(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    home_page = models.CharField(max_length = 100,  blank=True, null=True)
+    # home_page = models.CharField(max_length = 100,  blank=True, null=True)
     blog_page = models.CharField(max_length = 100,  blank=True, null=True)
     individual_blog_post = models.CharField(max_length = 100,  blank=True, null=True)
 

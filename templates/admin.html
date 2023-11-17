@@ -50,15 +50,13 @@
                     <label for="image">Image:</label>
                     <input type="file" class="form-control-file" id="image" name="image" accept=".png, .jpg, .jpeg">
                 </section>
-
+                <section class="form-group">
+                    <label for="category">Category:</label>
+                    <input type="text" class="form-control" id="category" name="category" required >
+                </section>
                 <section class="form-check">
                     <input type="checkbox" class="form-check-input" id="publish" name="publish">
                     <label class="form-check-label" for="publish">Publish</label>
-                </section>
-
-                <section class="form-check">
-                    <input type="checkbox" class="form-check-input" id="featured" name="featured">
-                    <label class="form-check-label" for="featured">Featured</label>
                 </section>
 
                 <button type="submit" class="btn btn-primary" name="submitpost" id="make-post">Create Post</button>
@@ -77,7 +75,6 @@
                         <th>Edit</th>
                         <th>Delete</th>
                         <th>Publish</th>
-                        <th>Featured</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -96,7 +93,6 @@
 
                             </form>
                             <td><input type="checkbox" {% if post.publish == True %} checked {% endif %}  disabled></td>
-                            <td><input type="checkbox" {% if post.featured == True %} checked {% endif %}  disabled></td>
                         </tr>
                     {% endfor %}                        
                 </tbody>

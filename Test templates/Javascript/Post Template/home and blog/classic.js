@@ -25,7 +25,7 @@ bloggit.className = "blog-container-1"
                 </div>
             </div>
             <div class="post-image">
-                <img src="http://127.0.0.1:8000${image}" alt="${title}">
+                <img src="https://bloggit.pythonanywhere.com${image}" alt="${title}">
             </div>
             `
             bloggit.appendChild(post_container)
@@ -35,6 +35,9 @@ bloggit.className = "blog-container-1"
                 <h2>${title}</h2>
                 <p>${strip_tags(body)}</p>
                 <date>${convert_datetime(parameter.time)}</date>
+                <div class="read-more">
+                    <a href="${data["individual_page"]}?id=${post_id}">Read More</a>
+                </div>
             </div>
                 <div class="post-image">
                 

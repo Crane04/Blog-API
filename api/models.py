@@ -18,8 +18,9 @@ class Post(models.Model):
         
     )
     time = models.DateTimeField(default = datetime.now())
-    featured = models.BooleanField(default=False)
+    # featured = models.BooleanField(default=False)
     publish = models.BooleanField(default=False)
+    categories = models.CharField(default = "", max_length=100)
 
     def save(self, *args, **kwargs):
         if not self.custom_id:

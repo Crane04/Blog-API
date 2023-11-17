@@ -92,8 +92,12 @@ function strip_tags(param){
     return words.slice(0, 30).join(' ');
 }
 
+const url_parameters = window.location.search;
 
-fetch(`http://127.0.0.1:8000/posts/api/${api_key}?url=${current_url}&cont_rend=${cont_rend}&header_type=${header_type}`)
+const category = new URLSearchParams(url_parameters).get("category");
+console.log(category);
+
+fetch(`http://127.0.0.1:8000/posts/api/${api_key}?url=${current_url}&cont_rend=${cont_rend}&header_type=${header_type}&category=${category}`)
 
     .then((response) => {
         if (response.status === 200) { // Replace with the expected status code

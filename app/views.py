@@ -24,7 +24,7 @@ class AdminPageView(View):
         if "submitpost" in request.POST:
             title = request.POST["title"]
             content = request.POST.get("content", "")
-
+            category = request.POST["category"]
             if not content.strip() or content is None or content == None or content.strip() is None or content.strip() == '<p><br></p>':
                 messages.info(request, 'Summernote editor is empty')
                 return redirect("/dashboard/admin")
@@ -34,17 +34,13 @@ class AdminPageView(View):
             else:
                 publish = False
 
-            if "featured" in request.POST:
-                featured = True
-            else:
-                featured = False
 
             create_post = Post.objects.create(
                 creator = request.user,
                 title = title,
                 body= content,
                 publish = publish,
-                featured = featured
+                categories = category
             )
 
             if request.FILES:
@@ -81,6 +77,7 @@ class PostEditView(View):
 
             post_.title = request.POST["title"]
             content = request.POST.get("content", "")
+            category = request.POST["category"]
 
             if not content.strip() or content is None or content == None or content.strip() is None or content.strip() == '<p><br></p>':
                 messages.info(request, 'Summernote editor is empty')
@@ -94,13 +91,10 @@ class PostEditView(View):
             else:
                 publish = False
 
-            if "featured" in request.POST:
-                featured = True
-            else:
-                featured = False
+
 
             post_.publish = publish
-            post_.featured = featured
+            post_.categories = category
 
             if request.FILES:
                 image = request.FILES["image"]
@@ -157,14 +151,12 @@ class ApiPageView(View):
         try:
             if request.method == "POST":
                 if "update-sites" in request.POST:
-                    homePage = request.POST["homePage"]
 
                     blogPage = request.POST["blogPage"]
                     individualPostPage = request.POST["individualPostPage"]
 
                     sites = get_object_or_404(UserSites, user = request.user)
 
-                    sites.home_page = homePage
                     sites.blog_page = blogPage
                     sites.individual_blog_post = individualPostPage
 

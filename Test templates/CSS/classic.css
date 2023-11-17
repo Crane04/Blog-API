@@ -30,12 +30,15 @@
 }
     .blog-container-1  .blog-post {
     flex-direction: column;
-    text-align: center;
+    /* text-align: center; */
   }
 
   .blog-container-1 .post-image {
     text-align: center;
     width: 100%;
 
+  }
+  .blog-container-1 .post-image img{
+    width: 90%;
   }
 }

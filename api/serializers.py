@@ -6,7 +6,7 @@ class PostSerializer(ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ["title", "body", "image", "featured", "publish", "time", "custom_id"]
+        fields = ["title", "body", "image", "publish", "time", "custom_id", "categories"]
 
 # class GetPostSerializer(ModelSerializer):
 #     class Meta:
