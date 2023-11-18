@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'api',
     "userprofile",
     "app",
+    "comments",
 
 
     # dependencies
