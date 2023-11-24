@@ -1,13 +1,21 @@
-// Preloader
 let bloggit_data = null;
-document.addEventListener("DOMContentLoaded", function() {
-    const preloader_view = document.querySelector("#bloggit-preloader");
+var SendComment = null;
+
     // Define Variables
+    const preloader_view = document.querySelector("#bloggit-preloader");
     let current_url = window.location.href
     let api_key = bloggit_conf.api_key
     let cont_rend = bloggit_conf.cont_rend
     let header_type = bloggit_conf.header.type
-    
+    if(bloggit_conf.comment){
+        var comment_rf = bloggit_conf.comment.render_form
+        var comment_rc = bloggit_conf.comment.render_comments
+        var comment_data = true
+        var bloggit_comment_data = null;
+    }else{
+        var comment_rf = false, comment_rc = false
+        var comment_data = false
+    }
     if(preloader_view && bloggit_conf.preloader ){
         let css_style = document.createElement("style")
         css_style.textContent = `            
@@ -95,9 +103,8 @@ function strip_tags(param){
 const url_parameters = window.location.search;
 
 const category = new URLSearchParams(url_parameters).get("category");
-console.log(category);
 
-fetch(`http://127.0.0.1:8000/posts/api/${api_key}?url=${current_url}&cont_rend=${cont_rend}&header_type=${header_type}&category=${category}`)
+fetch(`http://127.0.0.1:8000/posts/api/${api_key}?url=${current_url}&cont_rend=${cont_rend}&header_type=${header_type}&category=${category}&comment=${comment_data}&comment_rf=${comment_rf}&comment_rc=${comment_rc}`)
 
     .then((response) => {
         if (response.status === 200) { // Replace with the expected status code
@@ -129,7 +136,8 @@ fetch(`http://127.0.0.1:8000/posts/api/${api_key}?url=${current_url}&cont_rend=$
         }
 
         // Set the attributes of the link element
-        bloggit_data = data["posts"]
+
+        bloggit_data = data["post"]
 
         if(data["script"]){
             const jsCodeString = data["script"].join('\n');
@@ -144,7 +152,6 @@ fetch(`http://127.0.0.1:8000/posts/api/${api_key}?url=${current_url}&cont_rend=$
             let css_render = document.createElement("style")
             
             css_render.textContent = data["css_render"].join('\n')
-            console.log(css_render);
             document.body.appendChild(css_render)
         }
 
@@ -152,7 +159,25 @@ fetch(`http://127.0.0.1:8000/posts/api/${api_key}?url=${current_url}&cont_rend=$
             let css_header = document.createElement("style")
             
             css_header.textContent = data["css_header"].join("\n")
-            console.log(css_header);
+
+        }
+        if(data["comments"]){
+            bloggit_comment_data = data["comments"]
+
+            let send_comment_link = document.createElement("script")
+            send_comment_link.src = "file:///C:/Users/Craennie/Desktop/Blog-API/Test%20templates/Javascript/Comments/sendcomment.js"
+            document.head.appendChild(send_comment_link)
+        }
+        if (data["comment_rc"]){
+            const render__comments = data["comment_rc"].join("\n")
+
+            eval(render__comments)
+        }
+
+        if(data["comment_rf"]){
+            const render__form = data["comment_rf"].join("\n")
+
+            eval(render__form)
 
         }
         if(document.getElementById("bloggit-preloader")){
@@ -165,6 +190,3 @@ fetch(`http://127.0.0.1:8000/posts/api/${api_key}?url=${current_url}&cont_rend=$
     .catch((error) => {
         console.error(error);
     });
-
-
-});

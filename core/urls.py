@@ -25,6 +25,7 @@ urlpatterns = [
     path("", include("api.urls")),
     path("accounts/", include("userprofile.urls")),
     path("", include("app.urls")),
+    path("", include("comments.urls")),
 
     # Dependencies
     path("api-auth/", include("rest_framework.urls")),

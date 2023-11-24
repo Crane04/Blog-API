@@ -14,6 +14,8 @@ from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAdminUser, BasePermission, SAFE_METHODS, IsAuthenticated
 from userprofile.models import Token
 from app.models import Scripts, CSS, UserSites
+from comments.models import Comment
+from comments.serializers import CommentSerializer
 
 
 class RestrictAccess(BasePermission):
@@ -46,6 +48,7 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
         cont_rend = request.GET.get("cont_rend")
         header_type = request.GET.get("header_type")
 
+
         try:
             script = get_object_or_404(Scripts, name = cont_rend)
             if CSS.objects.filter(name = cont_rend).exists():
@@ -64,10 +67,11 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
 
         requesting_url_homeblog = requesting_url.split("?")[0]
 
-        
+        print(requesting_url_homeblog)
         # Filter Posts
         if  user_urls.blog_page in requesting_url_homeblog:
             # All Posts
+            
             category = request.GET.get("category")
 
             if category != "null":
@@ -108,17 +112,26 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
             )
 
 
-        elif user_urls.individual_blog_post in requesting_url.split("?id=")[0]:
+        elif user_urls.individual_blog_post.replace("%20", " ") in requesting_url.split("?id=")[0]:
             # The Id in the Post will be gotten and used here
 
             try:
                 data = get_list_or_404(Post, custom_id = requesting_url.split("?id=")[1])
 
+                post = Post.objects.get(custom_id = requesting_url.split("?id=")[1])
+
+                comments = Comment.objects.filter(post = post.pk)
+                
+                comments_serailizer = CommentSerializer(data = comments, many = True)
+
+
                 serialized_data = PostSerializer(data = data, many = True)
                 serialized_data.is_valid()
-
+                comments_serailizer.is_valid()
+                
                 response_data = {
-                    "post": serialized_data.data
+                    "post": serialized_data.data,
+                    # "comments": comments_serailizer.data
                 }
                 if cont_rend:
                     response_data["script"] = script.script
@@ -126,9 +139,25 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
                 if header_type:
                     response_data["header_type"] = header_type.script
 
+                comment_data = request.GET.get("comment")
+
+                if comment_data:
+                    comment_rf = request.GET.get("comment_rf")
+                    comment_rc = request.GET.get("comment_rc")
+                    response_data["comments"] = comments_serailizer.data
+                    response_data["sendcomment"] = Scripts.objects.get(name = "send comment").script
+                
+                    if comment_rc.lower() == "true":
+                        response_data["comment_rc"] = Scripts.objects.get(name = "render comments").script
+
+                    if comment_rf.lower()== 'true':
+                        response_data['comment_rf'] = Scripts.objects.get(name = "render form").script
+
                 return Response(
                     response_data, status = status.HTTP_200_OK
                 )
+
+
             except:
                 data = None
                 response_data = {
@@ -140,9 +169,6 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
 
                 try:
                     response_data["css_header"] = css_header.css_file
-                except: pass
-                try:
-                    response_data["home"] = user_urls.home_page
                 except: pass
 
                 return Response(response_data, status = status.HTTP_404_NOT_FOUND)

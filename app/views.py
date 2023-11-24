@@ -157,8 +157,8 @@ class ApiPageView(View):
 
                     sites = get_object_or_404(UserSites, user = request.user)
 
-                    sites.blog_page = blogPage
-                    sites.individual_blog_post = individualPostPage
+                    sites.blog_page = blogPage.replace("\\", "/")
+                    sites.individual_blog_post = individualPostPage.replace("\\", "/")
 
                     sites.save()
 

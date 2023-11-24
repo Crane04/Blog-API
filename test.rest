@@ -30,3 +30,10 @@ Authorization:  Token 7cee17c1e493d00bb72bbc14ef1dab8512a0634e
 GET http://127.0.0.1:8000/dashboard/actions/lkijuhg49efad8e0f
 Content-Type: application/json
 Authorization:  Token 7cee17c1e493d00bb72bbc14ef1dab8512a0634e
+
+
+####
+get http://127.0.0.1:8000/comment/7070aa3bfb7a4f6f8266fa44180d4aaf/Ride on f3ec538959
+Content-Type: application/json
+
+{"name": "Yusuf", "email": "mail@gmail.com", "comment": "pp "}

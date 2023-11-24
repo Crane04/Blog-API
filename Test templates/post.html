@@ -11,7 +11,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script> 
         const bloggit_conf = {
-            "api_key": "7070aa3bfb7a4f6f8266fa44180d4aaf",
+            "api_key": "e527f15623dc4494ae0e90ec50aeb7af",            
+            "preloader": "veron",
             "cont_rend":"cappuccino",
             "header": {
                 "type": "milky-way",
@@ -21,21 +22,41 @@
                     "Contact": "/contact",
                     "About": "/about"
                 }
+            },
+            
+            "comment": {
+                "render_form": "True",
+                "render_comments": "true"
             }
         }
     </script>
-    <script src="./Javascript/home_and_blog.js"></script>
+    <style>
+        #bloggit-header{
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+    </style>
+<script src = "https://bloggit.pythonanywhere.com/static/Javascript/config.js" defer></script>
 </head>
 <body>
     <!-- Navigation Bar -->
     <section id="bloggit-header">
-
     </section>
 
+    <div id="bloggit-preloader"></div>
     <div  id="bloggit-container">
 
     </div>
-    <!-- Add Bootstrap JS and jQuery for responsive features (optional) -->
 
+
+    <div id="bloggit-comment-rf">
+        
+    </div>
+
+
+    <section id="bloggit-comment-container">
+
+    </section>
 </body>
 </html>
