@@ -75,13 +75,13 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
 
             if category != "null":
 
-                data = Post.objects.filter(creator = user, publish = True, categories = category)
+                data = Post.objects.filter(creator = user, publish = True, categories = category).order_by("-time")
                 if data.exists():
                     data = data
                 else:
-                    data = Post.objects.filter(creator = user, publish = True)
+                    data = Post.objects.filter(creator = user, publish = True).order_by("-time")
             elif category == "null":
-                data = Post.objects.filter(creator = user, publish = True)
+                data = Post.objects.filter(creator = user, publish = True).order_by("-time")
 
             serialized_data = PostSerializer(data = data,  many = True)
             serialized_data.is_valid()
