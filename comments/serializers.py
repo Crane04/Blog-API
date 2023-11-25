@@ -7,10 +7,7 @@ class CommentSerializer(ModelSerializer):
     class Meta:
         model = Comment
         fields = "__all__"
-        extra_kwargs = {
-            'email': {'write_only': True},
-        }
-
+        
     def validate_comment(self, value):
         if value.strip() == "":
             raise ValidationError("Comment can't be empty!")

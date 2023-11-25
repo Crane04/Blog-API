@@ -19,12 +19,12 @@ from comments.serializers import CommentSerializer
 
 
 class RestrictAccess(BasePermission):
-    
+
     def has_object_permission(self, request, view, obj):
 
         if request.method in SAFE_METHODS:
             return True
-    
+
         return obj.creator == request.user
 
 class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
@@ -34,7 +34,7 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
     serializer_class = PostSerializer
     queryset = Post.objects.all()
     parser_classes = [MultiPartParser, FormParser]
-    
+
 
     def get(self, request:Request, api_key, *args, **kwargs):
 
@@ -43,7 +43,7 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
 
         # Get user associated with the token
         user = get_object_or_404(User, username = token.user)
-      
+
         requesting_url = request.GET.get("url")
         cont_rend = request.GET.get("cont_rend")
         header_type = request.GET.get("header_type")
@@ -67,23 +67,22 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
 
         requesting_url_homeblog = requesting_url.split("?")[0]
 
-        print(requesting_url_homeblog)
+
         # Filter Posts
-        if  user_urls.blog_page in requesting_url_homeblog:
+        if  user_urls.blog_page.replace("%20", " ") in requesting_url_homeblog.replace("\\", "/"):
             # All Posts
-            
             category = request.GET.get("category")
 
             if category != "null":
-                
+
                 data = Post.objects.filter(creator = user, publish = True, categories = category)
                 if data.exists():
                     data = data
                 else:
-                    data = Post.objects.filter(creator = user, publish = True)    
+                    data = Post.objects.filter(creator = user, publish = True)
             elif category == "null":
                 data = Post.objects.filter(creator = user, publish = True)
-            
+
             serialized_data = PostSerializer(data = data,  many = True)
             serialized_data.is_valid()
 
@@ -112,7 +111,7 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
             )
 
 
-        elif user_urls.individual_blog_post.replace("%20", " ") in requesting_url.split("?id=")[0]:
+        elif user_urls.individual_blog_post.replace("%20", " ") in requesting_url.split("?id=")[0].replace("\\", "/"):
             # The Id in the Post will be gotten and used here
 
             try:
@@ -121,20 +120,20 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
                 post = Post.objects.get(custom_id = requesting_url.split("?id=")[1])
 
                 comments = Comment.objects.filter(post = post.pk)
-                
+
                 comments_serailizer = CommentSerializer(data = comments, many = True)
 
 
                 serialized_data = PostSerializer(data = data, many = True)
                 serialized_data.is_valid()
                 comments_serailizer.is_valid()
-                
+
                 response_data = {
                     "post": serialized_data.data,
                     # "comments": comments_serailizer.data
                 }
                 if cont_rend:
-                    response_data["script"] = script.script
+                    response_data["script"] = Scripts.objects.get(name = "cappuccino").script
 
                 if header_type:
                     response_data["header_type"] = header_type.script
@@ -146,7 +145,7 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
                     comment_rc = request.GET.get("comment_rc")
                     response_data["comments"] = comments_serailizer.data
                     response_data["sendcomment"] = Scripts.objects.get(name = "send comment").script
-                
+
                     if comment_rc.lower() == "true":
                         response_data["comment_rc"] = Scripts.objects.get(name = "render comments").script
 
@@ -177,7 +176,6 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
             response_data = {
                 "unregistered_site_url": "Not Found"
             }
-            print(response_data)
             return Response(response_data, status = status.HTTP_401_UNAUTHORIZED)
 
         return self.list(request, *args, **kwargs)
