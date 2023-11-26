@@ -1,9 +1,12 @@
 const submit_comment_btn = document.getElementById("bloggit-submit-comment")
+const comment_container = document.getElementById("bloggit-comment-container")
 
 if(submit_comment_btn){
 submit_comment_btn.addEventListener("click", function(e){
 
     e.preventDefault()
+    submit_comment_btn.disabled = true
+    submit_comment_btn.style.cursor = "not-allowed"
     let comment = document.getElementById("comment-comment")
     let comment_name = document.getElementById("comment-name")
     let comment_email = document.getElementById("comment-email")
@@ -30,6 +33,22 @@ submit_comment_btn.addEventListener("click", function(e){
     })
     .then(response => {
         if(response.status == '201'){
+            let time = new Date().toDateString();
+            
+            if(comment_container){
+                const c_cont_inner = document.querySelector("#bloggit-comment-container #comments")
+                c_cont_inner.innerHTML =  `
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h3 class="card-title">${comment_name.value}</h3>
+                        <time>${time}</time>
+                        <article class="card-text">${comment.value}</article>
+                    </div>
+                </div>
+
+            ` + c_cont_inner.innerHTML
+            }
+
             comment.value = comment_email.value = comment_name.value = ""
 
             document.getElementById("comment-status").innerText = 'Your comment has been added!'
@@ -41,6 +60,8 @@ submit_comment_btn.addEventListener("click", function(e){
                 
             }
         }
+        submit_comment_btn.disabled = false
+        submit_comment_btn.style.cursor = "pointer"
         return response.json();
 
     })

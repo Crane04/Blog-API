@@ -87,7 +87,7 @@ function convert_datetime(param){
     let __time__ = `${hours}:${minutes}:${seconds}`;
 
     // Format the date as "Month Day, Year"
-   return   date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).toString() + " ; " + __time__;
+   return   date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).toString() //+ " ; " + __time__;
 }
 
 function strip_tags(param){
@@ -125,15 +125,16 @@ fetch(`http://127.0.0.1:8000/posts/api/${api_key}?url=${current_url}&cont_rend=$
 
         if (data["not_found_details"]){
             if(bloggit_conf["cont_rend"]){
-                document.getElementById("bloggit-container").innerHTML = `    <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-6 text-center mt-5">
-                        <h1 class="display-4">404 - Not Found</h1>
-                        <p class="lead">This Blog Post does not exist!.</p>
-                        <a href="${data["home"]}" class="btn btn-primary">Go to Homepage</a>
+                document.getElementById("bloggit-container").innerHTML = `    
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6 text-center mt-5">
+                            <h1 class="display-4">404 - Not Found</h1>
+                            <p class="lead">This Blog Post does not exist!.</p>
+                            <a href="${data["home_page"]}" class="btn btn-primary">Go to Homepage</a>
+                        </div>
                     </div>
-                </div>
-            </div>`
+                </div>`
             }else{
                 console.log("Error 404, This post doesn't exist!");
             }

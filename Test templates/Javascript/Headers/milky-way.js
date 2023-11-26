@@ -8,7 +8,7 @@ bloggit_header.innerHTML = `
 `
 const brand_name = document.getElementById("brand-name")
 const brand_name_a = document.createElement("a")
-brand_name_a.href = "/"
+brand_name_a.href = data["home_page"]
 brand_name_a.className = "navbar-brand"
 if(bloggit_conf["header"]["brand_name"]){
     brand_name_a.innerText = bloggit_conf["header"]["brand_name"]

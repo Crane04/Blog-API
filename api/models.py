@@ -17,7 +17,7 @@ class Post(models.Model):
     body = HTMLField(
         
     )
-    time = models.DateTimeField(default = datetime.now())
+    time = models.CharField(default = datetime.now(), max_length = 120)
     # featured = models.BooleanField(default=False)
     publish = models.BooleanField(default=False)
     categories = models.CharField(default = "", max_length=100)

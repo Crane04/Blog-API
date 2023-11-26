@@ -59,7 +59,9 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
             header_type = get_object_or_404(Scripts, name = header_type)
             if CSS.objects.filter(name = header_type).exists():
                 css_header = CSS.objects.get(name = header_type)
-        except:pass
+            else:
+                css_header = "undefined"
+        except: header_type = "undefined"
 
         user_urls = get_object_or_404(UserSites, user = token.user)
 
@@ -88,7 +90,8 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
 
             response_data = {
                 "posts": serialized_data.data,
-                "individual_page": user_urls.individual_blog_post
+                "individual_page": user_urls.individual_blog_post,
+                "home_page": user_urls.blog_page
             }
             try:
                 response_data["script"] = script.script
@@ -130,13 +133,16 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
 
                 response_data = {
                     "post": serialized_data.data,
-                    # "comments": comments_serailizer.data
+                    "home_page": user_urls.blog_page
                 }
                 if cont_rend:
                     response_data["script"] = Scripts.objects.get(name = "cappuccino").script
 
-                if header_type:
+                if header_type != "undefined":
                     response_data["header_type"] = header_type.script
+                elif header_type == "undefined":
+                    pass
+                
 
                 comment_data = request.GET.get("comment")
 
@@ -174,7 +180,8 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
 
         else:
             response_data = {
-                "unregistered_site_url": "Not Found"
+                "unregistered_site_url": "Not Found",
+                "home_page": user_urls.blog_page
             }
             return Response(response_data, status = status.HTTP_401_UNAUTHORIZED)
 
