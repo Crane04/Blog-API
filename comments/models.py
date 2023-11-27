@@ -10,7 +10,7 @@ class Comment(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField(blank = True, null = True)
     comment = HTMLField()
-    time = models.DateTimeField(default=datetime.now())
+    time = models.CharField(default=datetime.now(), max_length = 100)
 
     def __str__(self):
         return str(self.post)

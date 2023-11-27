@@ -17,6 +17,8 @@ if(comment_form_container){
             <label for="comment-comment">Comment:* (required)</label>
             <textarea class="form-control" id="comment-comment" rows="4" placeholder="Enter your comment" required></textarea>
         </div>
+        
+        <input type="hidden" name="current-time" id="current-time" value="">
         <p id="comment-status"></p>
         <button type="submit" class="btn btn-primary" id="bloggit-submit-comment">Submit</button>
     

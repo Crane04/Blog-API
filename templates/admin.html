@@ -52,12 +52,13 @@
                 </section>
                 <section class="form-group">
                     <label for="category">Category:</label>
-                    <input type="text" class="form-control" id="category" name="category" required >
+                    <input type="text" class="form-control" id="category" name="category"  >
                 </section>
                 <section class="form-check">
                     <input type="checkbox" class="form-check-input" id="publish" name="publish">
                     <label class="form-check-label" for="publish">Publish</label>
                 </section>
+                <input type="hidden" name="current-time" id="current-time" value="">
 
                 <button type="submit" class="btn btn-primary" name="submitpost" id="make-post">Create Post</button>
             </form>
@@ -82,7 +83,7 @@
                         <tr>
                             <td class="numbering"></td>
                             <td style="white-space: nowrap;">{{ post.title|truncatewords:5 }}</td>
-                            <td style="white-space: nowrap;">{{ post.time }}</td>
+                            <td style="white-space: nowrap;" class="time-of-post">{{ post.time }}</td>
 
                                 <td><a href="edit/{{ post.custom_id }}" class="set-btn" id="dp{{ post.custom_id }}">Edit</a></td>
                             <form action="" method="post">

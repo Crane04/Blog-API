@@ -25,6 +25,7 @@ class AdminPageView(View):
             title = request.POST["title"]
             content = request.POST.get("content", "")
             category = request.POST["category"]
+            time = request.POST["current-time"]
             if not content.strip() or content is None or content == None or content.strip() is None or content.strip() == '<p><br></p>':
                 messages.info(request, 'Summernote editor is empty')
                 return redirect("/dashboard/admin")
@@ -40,7 +41,8 @@ class AdminPageView(View):
                 title = title,
                 body= content,
                 publish = publish,
-                categories = category
+                categories = category,
+                time = time
             )
 
             if request.FILES:

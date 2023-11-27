@@ -24,7 +24,7 @@ class CommentView(GenericAPIView):
 
         post = Post.objects.get(custom_id = id)
 
-        comments = Comment.objects.filter(post = post.pk)
+        comments = Comment.objects.filter(post = post.pk)[::-1]
 
         serializer = self.serializer_class(comments, many = True)
 

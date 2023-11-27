@@ -23,8 +23,8 @@ if (comment_container){
                     <div class="card mb-3">
                         <div class="card-body">
                             <h3 class="card-title">${name}</h3>
-                            <time>${time}</time>
                             <article class="card-text">${comment}</article>
+                            <time>${time}</time>
                         </div>
                     </div>
     

@@ -5,7 +5,6 @@ var SendComment = null;
     const preloader_view = document.querySelector("#bloggit-preloader");
     let current_url = window.location.href
     let api_key = bloggit_conf.api_key
-
     let cont_rend = bloggit_conf.cont_rend
     if(bloggit_conf.header){
         var header_type = bloggit_conf.header.type
@@ -65,29 +64,23 @@ var SendComment = null;
         }
     }
 
-
-
 function convert_datetime(param){
-    const dateComponents = param.match(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})/);
-
-    const year = parseInt(dateComponents[1]);
-    const month = parseInt(dateComponents[2]) - 1;
-    const day = parseInt(dateComponents[3]);
-
-    // Create a JavaScript Date object without considering the timezone
-    const date = new Date(year, month, day);
-
-    const time = new Date(param);
-
-    // Get the hours, minutes, and seconds
-    const hours = time.getHours();
-    const minutes = time.getMinutes();
-    const seconds = time.getSeconds();
-
-    let __time__ = `${hours}:${minutes}:${seconds}`;
-
-    // Format the date as "Month Day, Year"
-   return   date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).toString() //+ " ; " + __time__;
+    const originalDate = new Date(param);
+    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    
+    const options = {
+      timeZone: userTimeZone,
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      hour12: false
+    };
+    
+    const convertedDate = new Intl.DateTimeFormat('en-US', options).format(originalDate);
+    return convertedDate
 }
 
 function strip_tags(param){
@@ -141,7 +134,6 @@ fetch(`http://127.0.0.1:8000/posts/api/${api_key}?url=${current_url}&cont_rend=$
         }
 
         // Set the attributes of the link element
-
         bloggit_data = (data["posts"] !== undefined) ? data["posts"] : data["post"];
 
 
