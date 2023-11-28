@@ -12,7 +12,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="{% static 'CSS/admin.css' %}">
     <link rel="shortcut icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
-
+    <script src="https://kit.fontawesome.com/68ab06de90.js" crossorigin="anonymous"></script>
 </head>
 <body>
     {% include 'extensions/nav.html' %}
@@ -74,8 +74,10 @@
                         <th>Title</th>
                         <th>Date</th>
                         <th>Edit</th>
+                        <th>Comments</th>
                         <th>Delete</th>
                         <th>Publish</th>
+                        <th>Category</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -84,8 +86,8 @@
                             <td class="numbering"></td>
                             <td style="white-space: nowrap;">{{ post.title|truncatewords:5 }}</td>
                             <td style="white-space: nowrap;" class="time-of-post">{{ post.time }}</td>
-
-                                <td><a href="edit/{{ post.custom_id }}" class="set-btn" id="dp{{ post.custom_id }}">Edit</a></td>
+                            <td><a href="edit/{{ post.custom_id }}" class="set-btn" id="dp{{ post.custom_id }}">Edit</a></td>
+                            <td class="comment-s"><a href="/dashboard/comments/{{ post.custom_id }}">{{ post.post.count }} <i class="fa-solid fa-comment green"></i></a></td>
                             <form action="" method="post">
                                 {% csrf_token %}
 
@@ -94,6 +96,7 @@
 
                             </form>
                             <td><input type="checkbox" {% if post.publish == True %} checked {% endif %}  disabled></td>
+                            <td style="white-space: nowrap;">{{ post.categories|truncatewords:4 }}</td>
                         </tr>
                     {% endfor %}                        
                 </tbody>

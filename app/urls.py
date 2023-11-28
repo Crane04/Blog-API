@@ -8,5 +8,6 @@ urlpatterns = [
     path("documentation", DocumentationView.as_view(), name = "documentaion-page"),
     path("", DocumentationView.as_view()),
     path("dashboard/api", login_required(ApiPageView.as_view())),
-    path("aboutme", AboutDevPage.as_view(), name="about-me")
+    path("aboutme", AboutDevPage.as_view(), name="about-me"),
+    path("dashboard/comments/<str:post_id>", login_required(CommentView.as_view()), name = "comments-page")
 ]

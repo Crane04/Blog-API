@@ -8,7 +8,6 @@ body {
 
 
 .container {
-    max-width: 800px;
     margin: 0 auto;
     padding: 20px;
 }
@@ -100,6 +99,16 @@ td a:hover{
     text-decoration: none;
     color: #fff;
 }
+
+td.comment-s i, td.comment-s a{
+    color: #128c7e !important;
+    font-weight: bold;
+}
+
+td.comment-s a:hover{
+    color: #075e54;
+}
+
 @media(max-width: 400px){
     #btns{
         display: flex !important;

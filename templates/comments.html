@@ -1,0 +1,72 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'CSS/admin.css' %}">
+    <link rel="shortcut icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/68ab06de90.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    {% include 'extensions/nav.html' %}
+    <section class="container">
+        <div class="alert alert-success status_post" style="display: none;" role="alert" id="editor-empty-alert"></div>
+        {% for message in messages %}
+            <div class="alert alert-success"  role="alert" id="editor-empty-alert">
+        {{ message }}
+        </div>
+        {% endfor %}
+        {% if comments %}
+        <!-- Manage Post Section -->
+        <section id="manage-post" class="form-section" style="display: block;">
+            <h1>Manage Comments</h1>
+
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>Name</th>
+                        <th>Date</th>
+                        <th>Email</th>
+                        <th>Comment</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for comment in comments %}
+                        <tr>
+                            <td class="numbering"></td>
+                            <td style="white-space: nowrap;">{{ comment.name }}</td>
+                            <td style="white-space: nowrap;" class="time-of-post">{{ comment.time }}</td>
+                            <td>{{ comment.email }}</td>
+                            <td>{{ comment.comment|truncatewords:7 }}</td>
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                    <input type="hidden" name="delete_id" value="{{ comment.id }}">
+                                    <td id="dp{{ comment.id }}"><button class="set-btn delpostnow" id = "{{ comment.id }}" name="deletePost">Delete</button></td>
+                            </form>
+                        </tr>
+                    {% endfor %}                        
+                </tbody>
+            </table>
+        {% else %}
+            <h1>No comments yet</h1>
+        {% endif %}
+        </section>
+        <script>
+
+        </script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <script src="{% static  'Javascript/summernote.js' %}"></script>
+    <script src="{% static  'Javascript/admin.js' %}"></script>
+</body>
+</html>

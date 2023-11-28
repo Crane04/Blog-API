@@ -7,6 +7,7 @@ from django.contrib import messages
 from userprofile.models import Token
 from app.models import UserSites
 import uuid
+from comments.models import Comment
 
 # Create your views here.
 
@@ -190,3 +191,33 @@ class AboutDevPage(View):
     def get(self, request, *args, **kwargs):
 
         return render(request, self.template_name)
+
+
+class CommentView(View):
+    template_name = "comments.html"
+
+    def get(self, request, post_id, *args, **kwargs):
+        post = get_object_or_404(Post, custom_id = post_id, creator = request.user)
+
+        comments = Comment.objects.filter(post = post)
+
+        context = {
+            "comments": comments,
+        }
+
+        return render(request, self.template_name, context = context)
+
+    def post(self, request, post_id, *args, **kwargs):
+        if "deletePost" in request.POST:
+            comment_id = request.POST["delete_id"]
+            
+            comment = Comment.objects.get(id = comment_id)
+            comment.delete()
+
+            messages.info(request, "You've successfully deleted a comment!")
+
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+        else:
+            messages.info(request, "Sorry, an error occured!")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
