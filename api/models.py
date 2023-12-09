@@ -21,6 +21,8 @@ class Post(models.Model):
     # featured = models.BooleanField(default=False)
     publish = models.BooleanField(default=False)
     categories = models.CharField(default = "", max_length=100)
+    views = models.PositiveIntegerField(default = 0)
+
 
     def save(self, *args, **kwargs):
         if not self.custom_id:
