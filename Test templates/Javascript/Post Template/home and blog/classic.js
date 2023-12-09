@@ -9,6 +9,7 @@ bloggit.className = "blog-container-1"
         let body = parameter.body
         let image = parameter.image
         let post_id = parameter.custom_id
+        let comments = parameter.comment_count
 
         let post_container = document.createElement('section')
         post_container.className = "blog-post"
@@ -27,6 +28,7 @@ bloggit.className = "blog-container-1"
             <div class="post-image">
                 <img src="https://bloggit.pythonanywhere.com${image}" alt="${title}">
             </div>
+            <span>${comments}</span>
             `
             bloggit.appendChild(post_container)
         }else{
