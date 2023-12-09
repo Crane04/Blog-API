@@ -6,7 +6,7 @@ class PostSerializer(ModelSerializer):
     comment_count = serializers.SerializerMethodField()
     class Meta:
         model = Post
-        fields = ["title", "body", "image", "publish", "time", "custom_id", "categories", 'comment_count']
+        fields = ["title", "body", "image", "publish", "time", "custom_id", "categories", 'comment_count', "views"]
 
     def get_comment_count(self, obj):
         return obj.post.count()

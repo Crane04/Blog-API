@@ -129,6 +129,12 @@ class PostListCreateView(GenericAPIView, CreateModelMixin, ListModelMixin):
 
                 serialized_data = PostSerializer(data = data, many = True)
                 serialized_data.is_valid()
+
+                try:
+                    post.views = post.views + 1
+                    post.save()
+                except: pass
+                
                 comments_serailizer.is_valid()
 
                 response_data = {

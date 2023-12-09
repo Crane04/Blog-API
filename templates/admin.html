@@ -75,6 +75,7 @@
                         <th>Date</th>
                         <th>Edit</th>
                         <th>Comments</th>
+                        <th>Views</th>
                         <th>Delete</th>
                         <th>Publish</th>
                         <th>Category</th>
@@ -88,6 +89,7 @@
                             <td style="white-space: nowrap;" class="time-of-post">{{ post.time }}</td>
                             <td><a href="edit/{{ post.custom_id }}" class="set-btn" id="dp{{ post.custom_id }}">Edit</a></td>
                             <td class="comment-s"><a href="/dashboard/comments/{{ post.custom_id }}">{{ post.post.count }} <i class="fa-solid fa-comment green"></i></a></td>
+                            <td>{{ post.views }}</td>
                             <form action="" method="post">
                                 {% csrf_token %}
 
