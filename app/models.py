@@ -11,11 +11,11 @@ class UserSites(models.Model):
         return str(self.user)
 
 def upload_script_path(instance, filename):
-    # Define the upload path for images
+    # Define the upload path for js
     return f"js/{filename}"
 
 def upload_css_path(instance, filename):
-    # Define the upload path for images
+    # Define the upload path for css
     return f"css/{filename}"
 
 class Scripts(models.Model):
@@ -30,3 +30,18 @@ class CSS(models.Model):
 
     def __str__(self):
         return self.name
+
+class UserConfig(models.Model):
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    brand_name = models.CharField(max_length = 100)
+    preloader = models.CharField(max_length = 15)
+    cont_rend = models.CharField(max_length = 15)
+    have_header = models.BooleanField(default = False)
+    header_type = models.CharField(max_length = 15)
+    header_links = models.JSONField()
+
+    def  __str__(self):
+        return self.brand_name
+
+

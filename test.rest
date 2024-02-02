@@ -26,7 +26,6 @@ Content-Type: application/json
 Authorization:  Token 7cee17c1e493d00bb72bbc14ef1dab8512a0634e
 
 ###
-
 GET http://127.0.0.1:8000/dashboard/actions/lkijuhg49efad8e0f
 Content-Type: application/json
 Authorization:  Token 7cee17c1e493d00bb72bbc14ef1dab8512a0634e
@@ -37,3 +36,13 @@ get http://127.0.0.1:8000/comment/7070aa3bfb7a4f6f8266fa44180d4aaf/Ride on f3ec5
 Content-Type: application/json
 
 {"name": "Yusuf", "email": "mail@gmail.com", "comment": "pp "}
+###
+
+GET  http://127.0.0.1:8000/v2/all-posts
+Content-Type: application/json
+Authorization:  Token a954b21e51c809b72b5e68d5a12717ef4e2c5d3a
+
+###
+GET  http://127.0.0.1:8000/v2/post/N365d9e3a1b
+Content-Type: application/json
+Authorization:  Token a954b21e51c809b72b5e68d5a12717ef4e2c5d3a

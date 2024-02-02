@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     "app",
     "comments",
 
+    # Inbuilt apps
+    "rest_framework.authtoken",
 
     # dependencies
     'rest_framework',
