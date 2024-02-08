@@ -31,12 +31,15 @@ class CSS(models.Model):
     def __str__(self):
         return self.name
 
+def upload_user_script(instance, filename):
+
+    return f"user-script/{filename}"
 class UserConfig(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     brand_name = models.CharField(max_length = 100)
     preloader = models.CharField(max_length = 15)
-    cont_rend = models.CharField(max_length = 15)
+    cont_rend = models.CharField(max_length = 15, blank = True, null = True)
     have_header = models.BooleanField(default = False)
     header_type = models.CharField(max_length = 15)
     header_links = models.JSONField()
@@ -44,4 +47,6 @@ class UserConfig(models.Model):
     def  __str__(self):
         return self.brand_name
 
-
+class UserScript(models.Model):
+    user = models.OneToOneField(User, on_delete = models.CASCADE)
+    script = models.FileField(upload_to=upload_user_script)

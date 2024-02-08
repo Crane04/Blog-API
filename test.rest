@@ -46,3 +46,10 @@ Authorization:  Token a954b21e51c809b72b5e68d5a12717ef4e2c5d3a
 GET  http://127.0.0.1:8000/v2/post/N365d9e3a1b
 Content-Type: application/json
 Authorization:  Token a954b21e51c809b72b5e68d5a12717ef4e2c5d3a
+
+###
+
+
+GET  http://127.0.0.1:8000/v2/main
+Content-Type: application/json
+Authorization: Token a954b21e51c809b72b5e68d5a12717ef4e2c5d3a
