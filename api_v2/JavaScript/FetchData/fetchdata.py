@@ -4,7 +4,6 @@ from .norender import no_render
 
 def fetch_data(token, type):
 
-    print(type)
     if type == "classic":
         return classic(token)
     

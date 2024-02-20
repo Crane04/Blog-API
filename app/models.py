@@ -33,7 +33,7 @@ class CSS(models.Model):
 
 def upload_user_script(instance, filename):
 
-    return f"user-script/{filename}"
+    return f"script/{filename}"
 class UserConfig(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)

@@ -1,7 +1,7 @@
 def classic(token):
 
     classic_txt = """
-            fetch(`http://127.0.0.1:8000/v2/all-posts`,
+            fetch(`http://127.0.0.1:8000/v2/main?location=${current_url}&id=${post_id}`,
         {
         "headers": {
         """
@@ -27,7 +27,7 @@ def classic(token):
     .then((data) => {
     bloggit_data = data
         
-    if(data[type] === "all" && data["detail"] === "okay"){
+    if(data["type"] === "all" && data["detail"] === "okay"){
     data["posts"].forEach(function(parameter){
 
         let title = parameter.title
@@ -48,7 +48,7 @@ def classic(token):
                 <date>${convert_datetime(parameter.time)}</date>
                 <div>${comments} Comments</div>
                 <div class="read-more">
-                    <a href="${data["individual_page"]}?id=${post_id}">Read More</a>
+                    <a href="${data["ind"]}?id=${post_id}">Read More</a>
                 </div>
             </div>
             <div class="post-image">
@@ -64,7 +64,7 @@ def classic(token):
                 <date>${convert_datetime(parameter.time)}</date>
                 <div>${comments} Comments</div>
                 <div class="read-more">
-                    <a href="${data["individual_page"]}?id=${post_id}">Read More</a>
+                    <a href="${data["ind"]}?id=${post_id}">Read More</a>
                 </div>
             </div>
                 <div class="post-image">
@@ -76,14 +76,14 @@ def classic(token):
     
     })
     }else if(data["type"] == "one"){
-        bloggit_container.className = "container mt-4"
+        bloggit.className = "container mt-4"
         post = data["post"]
 
-        bloggit_container.innerHTML+=`<h1> ${post.title}</h1>`
+        bloggit.innerHTML+=`<h1> ${post.title}</h1>`
         if(post.image){
-            bloggit_container.innerHTML += `<img src="http://127.0.0.1:8000${post.image }" class="img-fluid" alt="Image for the post">`
+            bloggit.innerHTML += `<img src="http://127.0.0.1:8000${post.image }" class="img-fluid" alt="Image for the post">`
         }
-        bloggit_container.innerHTML += `
+        bloggit.innerHTML += `
             <p>${convert_datetime(post.time)}</p>
             <div class="mt-4">
             ${post.body}

@@ -1,7 +1,7 @@
 def slimy_vue(token):
 
     slimy_vue_txt = """
-            fetch(`http://127.0.0.1:8000/v2/all-posts`,
+            fetch(`http://127.0.0.1:8000/v2/main?location=${current_url}&id=${post_id}`,
         {
         "headers": {
         """
@@ -26,7 +26,7 @@ def slimy_vue(token):
     })
 .then((data) => {
     bloggit_data = data
-    if(data[type] === "all" && data["detail"] === "okay"){
+    if(data["type"] === "all" && data["detail"] === "okay"){
         data["posts"].forEach(function(parameter){
 
                 let title = parameter.title
@@ -51,7 +51,7 @@ def slimy_vue(token):
                         <date>${convert_datetime(parameter.time)}</date>
                         <span>${comments} Comments</span>
                         <div class="read-more">
-                            <a href="${data["individual_page"]}?id=${post_id}">Read More</a>
+                            <a href="${data["ind"]}?id=${post_id}">Read More</a>
                         </div>
                     </div>
                     `
@@ -66,7 +66,7 @@ def slimy_vue(token):
                             <p>${strip_tags(body)}</p>
                             <span>${comments} Comments</span>
                             <div class="read-more">
-                                <a href="${data["individual_page"]}?id=${post_id}" >Read More</a>
+                                <a href="${data["ind"]}?id=${post_id}" >Read More</a>
                             </div>
                         </div>
                     `
@@ -74,14 +74,14 @@ def slimy_vue(token):
                 }
             }
         )}else if(data["type"] == "one"){
-            bloggit_container.className = "container mt-4"
+            bloggit.className = "container mt-4"
             post = data["post"]
 
-            bloggit_container.innerHTML+=`<h1> ${post.title}</h1>`
+            bloggit.innerHTML+=`<h1> ${post.title}</h1>`
             if(post.image){
-                bloggit_container.innerHTML += `<img src="http://127.0.0.1:8000${post.image }" class="img-fluid" alt="Image for the post">`
+                bloggit.innerHTML += `<img src="http://127.0.0.1:8000${post.image }" class="img-fluid" alt="Image for the post">`
             }
-            bloggit_container.innerHTML += `
+            bloggit.innerHTML += `
                 <p>${convert_datetime(post.time)}</p>
                 <div class="mt-4">
                 ${post.body}

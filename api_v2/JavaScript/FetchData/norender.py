@@ -1,7 +1,7 @@
 def no_render(token):
 
     no_render_txt = """
-            fetch(`http://127.0.0.1:8000/v2/all-posts`,
+            fetch(`http://127.0.0.1:8000/v2/main?location=${current_url}&id=${post_id}`,
         {
         "headers": {
         """
