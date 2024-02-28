@@ -1,14 +1,31 @@
 let bloggit_data = null 
 
-        const current_url = window.location.href
-        const url_parameters = window.location.search;
-        const post_id = new URLSearchParams(url_parameters).get("id");
-        const bloggit_header = document.getElementById("bloggit-header") 
+    const current_url = window.location.href 
+
+    const url_parameters = window.location.search; 
+
+    const post_id = new URLSearchParams(url_parameters).get("id");
+
+    const bloggit_header = document.getElementById("bloggit-header") 
 const bloggit_preloader = document.getElementById("bloggit-preloader") 
 const bloggit = document.getElementById("bloggit-container")
+
+/* Added Code */
+const comment_container = document.getElementById("bloggit-comment-container")
+bloggit_preloader.style.cssText = `
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+`;
+/* end*/
     bloggit_header.innerHTML = `
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Craennie</a>
+        <a class="navbar-brand" href="#">Crane</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -17,17 +34,23 @@ const bloggit = document.getElementById("bloggit-container")
                 
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/home">Home</a>
+                        <a class="nav-link" href="b">a</a>
                      </li>
     
             </ul>
         </div>
     </nav>`
     
-
-    preloader = ` <div id="preloader" class="spinner-border text-primary" role="status">
+        preloader = ` <div class="spinner-grow text-danger" role="status">
             <span class="sr-only">Loading...</span>
-        </div>`
+          </div>
+          <div class="spinner-grow text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <div class="spinner-grow text-info" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>`
+    
         bloggit_preloader.innerHTML = preloader
     
         function convert_datetime(param){
@@ -58,6 +81,74 @@ const bloggit = document.getElementById("bloggit-container")
         }
 
         }
+        function render_comment_form(){
+            const comment_form_container = document.getElementById("bloggit-comment-rf")
+
+            if(comment_form_container){
+                comment_form_container.innerHTML = `
+                <div class="container mt-5">
+                <h1>Leave a Comment</h1>
+                    <div class="form-group">
+                        <label for="comment-name">Name:* (required)</label>
+                        <input type="text" class="form-control" id="comment-name" placeholder="Enter your name" >
+                    </div>
+                    <div class="form-group">
+                        <label for="comment-email">Email: (not compulsory, and this won't be published)</label>
+                        <input type="email" class="form-control" id="comment-email" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="comment-comment">Comment:* (required)</label>
+                        <textarea class="form-control" id="comment-comment" rows="4" placeholder="Enter your comment"></textarea>
+                    </div>
+                    <p id="comment-status"></p>
+                    <button class="btn btn-primary" id="submit-comment" onclick = "BloggitSendComment()">Submit</button>
+                    <br /> <br/>
+               
+                </div>
+                `    
+            }else{
+                console.log("Comment Form Container not defined!")
+            }
+        }
+
+        function render_comments(data){
+            if (comment_container){
+                comment_container.classList += "container mt4"
+            
+                if (comment_container){
+                    comment_container.innerHTML = `<h2>Comments</h2>
+                    <div id="comments" class="mt-4">
+            
+                    </div>
+                    `
+                    const c_cont_inner = document.querySelector("#bloggit-comment-container #comments")
+                    if(data["comments"] != [] || data["comments"]){
+                        data["comments"].forEach(function(parameter){
+                            let name = parameter.name
+                            let comment = parameter.comment
+                            let time = convert_datetime(parameter.time) 
+                
+                            c_cont_inner.innerHTML += `
+                            <!-- Comments Display -->
+                            
+                                <!-- Comments will be displayed here -->
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h3 class="card-title">${name}</h3>
+                                        <article class="card-text">${comment}</article>
+                                        <time>${time}</time>
+                                    </div>
+                                </div>
+                
+                            `
+                        })
+                    }
+                }
+            }else{
+                console.log('Comment Container not defined')
+            }
+
+        }
 
         function strip_tags(param){
             let post_body = document.createElement("p")
@@ -77,7 +168,7 @@ const bloggit = document.getElementById("bloggit-container")
         {
         "headers": {
         
-        "Authorization": "Token a954b21e51c809b72b5e68d5a12717ef4e2c5d3a"
+        "Authorization": "Token 420a3f9dbc5eaf8dfe3b5c22ea2f630385a9f4cc"
         
     }
         }
@@ -157,11 +248,89 @@ const bloggit = document.getElementById("bloggit-container")
             <div class="mt-4">
             ${post.body}
             </div>`
+
+        render_comments(data)
+        render_comment_form()            
     }
+        try{
+            bloggit_preloader.style.display = "none"
+        }catch(error){
+        
+        }
 })
             
     .catch((error) =>{
         console.log(error)
     })
 
+
+    
+        function BloggitSendComment(){
         
+            let comment = document.getElementById("comment-comment")
+            let comment_name = document.getElementById("comment-name")
+            let comment_email = document.getElementById("comment-email")
+            
+            if(!comment.value|| !comment_name.value){
+                document.getElementById("comment-status").innerText = 'Name or Comment fields can\'t be empty!'
+                setTimeout(() => {
+                    document.getElementById("comment-status").innerText = ''
+                }, 4000);
+        
+                return
+            }
+            data = {
+                "comment": comment.value,
+                "name": comment_name.value,
+                "email": comment_email.value
+            }
+            fetch("http://127.0.0.1:8000/commentv2/"  + new URLSearchParams(url_parameters).get("id"), {
+                body: JSON.stringify(data),
+                method: "POST",
+                headers: {
+                    'Content-Type': "application/json",
+                    "Authorization": `Token 420a3f9dbc5eaf8dfe3b5c22ea2f630385a9f4cc`
+                }
+            })
+            .then(response => {
+                if(response.status == '201'){
+                    const datetime = new Date()
+                    const date = datetime.toLocaleDateString().replaceAll("/", "-") + " " + datetime.toLocaleTimeString()
+                    document.getElementById("comment-status").innerText = 'Your comment has been added!'
+                    setTimeout(() => {
+                        document.getElementById("comment-status").innerText = ''
+                    }, 4000);
+        
+                    if(document.querySelector("#bloggit-comment-container #comments")){
+                        const c_cont_inner = document.querySelector("#bloggit-comment-container #comments")
+                        c_cont_inner.innerHTML += `
+                        <!-- Comments Display -->
+                        
+                            <!-- Comments will be displayed here -->
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h3 class="card-title">${comment_name.value}</h3>
+                                    <article class="card-text">${comment.value}</article>
+                                    <time>${date}</time>
+                                </div>
+                            </div>
+            
+                        `
+                    }
+                    comment.value = comment_email.value = comment_name.value = ""
+                }
+                return response.json();
+        
+            })
+            .then(data => {
+                if(data["email"]){
+                    document.getElementById("comment-status").innerText = data["email"][0]
+                    setTimeout(() => {
+                        document.getElementById("comment-status").innerText = ''
+                    }, 4000);
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        }

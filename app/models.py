@@ -50,3 +50,6 @@ class UserConfig(models.Model):
 class UserScript(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
     script = models.FileField(upload_to=upload_user_script)
+
+    def __str__(self):
+        return str(self.user)

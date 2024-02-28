@@ -1,0 +1,205 @@
+{% load static %}
+{% load markdown_extras %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <title>API Documentation</title>
+    <link rel="stylesheet" href="{% static 'CSS/documentation.css' %}">
+    <link rel="shortcut icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
+</head>
+<body>
+    <!-- Top Navbar -->
+
+    {% include 'extensions/nav.html' %}
+    <!-- Side Navbar -->
+    <nav id="sidenav">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="#intro">Introduction</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#account">Account</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#start">Start Project</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#comment-feature">Comment Feature</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#smtp">S M T P</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container main-content mt-4">
+        <!-- Section 1: Endpoint 1 -->
+        <section id="intro">
+            *Great*
+            <h1>Introduction</h1>
+            <p>Here is a brief description about Bloggit!</p>
+            <article>
+                <p>
+                    Bloggit! stands as a robust content management system designed to
+                     cater to the needs of front-end developers, ensuring that they
+                      can create compelling blog websites with little configurations,
+                       all without the requirement of intricate backend or database
+                        expertise. This user-friendly platform offers an all-in-one solution,
+                    providing a secure and efficient database to store and manage all your content effortlessly.
+                </p>
+                <p>
+                    One of the standout features of Bloggit! is its capacity to streamline
+                     the creation of dynamic navigation bars. This allows
+                      developers to customize their website's menu and improve the overall user experience,
+                     all without diving into the complexities of server-side development.
+                </p>
+                <p>
+                    Moreover, Bloggit! simplifies the rendering of blog content. It enables
+                     you to effortlessly showcase not only the collective blogs but also
+                      individual posts, ensuring a smooth and aesthetically pleasing display.
+                    With Bloggit!, you can give your audience a seamless and engaging
+                     browsing experience while maintaining full control over your website's content.
+                </p>
+                <p>
+                    In summary, Bloggit! is the go-to choice for developers who
+                     seek a hassle-free and efficient means of creating and managing
+                      blog websites with little configurations, making it easier
+                       than ever to share their ideas and stories with the world.
+                </p>
+                <p>
+                    The following is the full Documentation on how to use this API.
+                </p>
+            </article>
+        </section>
+
+        <!-- Section 2: Endpoint 2 -->
+        <section id="account">
+            <h1>Set Up yor Account</h1>
+            <p>Create an Account for free  <a href="/accounts/signup">here</a> </p>
+            <p>You can now head to your <a href="/dashboard/admin">dashboard</a> and manage your posts</p>
+            <p>You will also need to set up your Site Urls in the <a href="/dashboard/api">API page</a>; you API Key is also there</p>
+            <h3>Site URLS</h3>
+            <br>
+            <h5><u>Blog Page</u></h5>
+            <p>
+                This is the Page where all your <b>published</b> posts are rendered. All posts have their Post ID, and this will also be returned.
+                <br>
+                You can also filter these posts by Categories. For example:
+
+            </p>
+            <pre><code>localhost:8000?category=lifestyle</code></pre>
+            <p>If the stated category doesnt exist, all your posts will simply be returned.</p>
+            <br>
+            <h5><u>Individual Post Page</u></h5>
+            <p>
+                This is where your single Posts are rendered; Each post has an unique ID. This ID must be included in the url.<br>
+                You can get the ID to all your posts dynamically from the Blog Page.
+            </p>
+            <pre><code>localhost:8000/post?id=mypost7823</code></pre>
+            <p>If the Post doesn't exist, a  standard 404 Page is returned(if you're using Bloggit's provided Templates)!</p>
+
+            <h1 id="start">Start Project</h1>
+            <p>Create a script that contains the following; and place it in the head section of your HTML code</p>
+            <pre><code>bloggit_conf = {
+    "api_key": "YOUR_API_KEY_HERE", // This is the only compulsory field
+    "preloader": "veron",
+    "cont_rend": "classic", // Allows you to make use of our existing template to render your Post(s)
+    "header":{ // Makes you use an existing Navigation Bar
+        "type": "milky-way", // Check our other navigation bar types the next paragraph
+        "brand_name": "Craennie", // This is the name that will appear on the navigation bar
+        "links":{
+            "Home": "/home",
+            "Contact": "/contact",
+            // Include others
+        }
+    }
+}</code></pre>
+            <p>Then, include the following just below the script you've created.</p>
+            <pre><code>&lt;script src = "https://bloggit.pythonanywhere.com/static/Javascript/config.js"&gt;&lt;/script&gt;</code></pre>
+            <p>If you decided to use Bloggit's provided templates. you'll have to include the following links too</p>
+            <pre><code>&lt;script src ="https://code.jquery.com/jquery-3.5.1.slim.min.js"&gt;&lt;/script&gt;
+&lt;script src ="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"&gt;&lt;/script&gt;
+&lt;script src ="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"&gt;&lt;/script&gt;
+&lt;link rel="shortcut icon" href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'type="image/x-icon"&gt;</code></pre>
+
+            <p>These configurations will be just enough to get you started.</p>
+            <b>Preloader</b>
+            <p>Options: veron, loda, growdan, traffic</p>
+            <p>Add the following to your HTML code to display the Preloader</p>
+            <pre><code>&lt;section id="bloggit-preloader"&gt;&lt;/section></code></pre>
+
+            <b>Cont Rend</b>
+            <p>Home and Blog Page - &gt; Options: slimy-vue, classic</p>
+            <p>Individual Post Page - &gt; Options: cappucino</p>
+            <p>Add the following to your HTML code to display the Blog Contents</p>
+            <pre><code>&lt;section id="bloggit-container"&gt;&lt;/section></code></pre>
+
+            <b>Header > type</b>
+            <p>Options: milky-way, </p>
+            <p>Add the following to your HTML code to display the Navigation Bar</p>
+            <pre><code>&lt;section id="bloggit-header"&gt;&lt;/section></code></pre>
+            <div class="alert alert-warning" role="alert" id="editor-empty-alert">
+                Note: Only the API field is compulsory to be added, the other fields can be left blank or removed completely.
+            </div>
+            <div class="alert alert-warning" role="alert" id="editor-empty-alert">
+                If developer decides not to use the provided template, the data is saved in a <b>"bloggit_data"</b> variable
+            </div>
+           </section>
+
+           <section id="comment-feature">
+                <h1>Comment Feature</h1>
+                <p>Bloggit now includes a robust comment feature, empowering users to engage and interact with blog posts seamlessly.
+                    This functionality simplifies the process of managing posts and associated comments.</p>
+                <p>To activate this feature, simply add the following to your configurations</p>
+                <pre><code>const bloggit_conf = {
+    // ...other configurations
+    "comment": {
+        "render_form": true, // Set to true to display the comment form
+        "render_comments": true // Set to true to display existing comments
+    }
+}</code></pre>
+                <p>This comment feature will only work if the "comment": {} is included, the render_form and render_comments are optional.</p>
+                <p>Once configured, Bloggit will automatically render a comment form and display existing comments based on your settings.</p>
+                <p>
+                    Bloggit offers flexibility in customizing the comment render and form. Developers can opt to handle the comment render and form creation independently, 
+                    allowing greater control over the user interface and data management.
+                </p>
+                <b>Custom Comment Render</b>
+                <p>By default, Bloggit stores comments in the <b>bloggit_comment_data</b>(A dictionary containing Name of Sender and Comment)  variable. 
+                    Developers can leverage this variable to manage comments programmatically. To integrate custom comment rendering:</p>
+                
+                    <p> <b>Accessing Comment Data:</b> Comments submitted via the provided form are stored in <b>bloggit_comment_data. </b>
+                        You can manipulate this data structure as needed to render comments in your preferred format.</p><br>
+                    <pre><code>// Accessing comments stored in bloggit_comment_data
+const comments = bloggit_comment_data;
+// Use 'comments' to render comments in a custom format</code></pre>
+                <b>Custom Comment Form</b>
+                <p>Developers have the freedom to create their comment submission form, 
+                    ensuring it includes essential fields identified by their IDs (comment-name, comment-email and comment-comment). 
+                    This empowers greater customization and integration with existing user interfaces.</p>
+                <p>The id of the Submit Button must also be <b>bloggit-submit-comment</b></p>
+           </section>
+           <section id="smtp">
+            <h1>SMTP</h1>
+            <p>You can apply our SMTP (Simple Mail Transfer Protocol) integration to enable contact forms on your website.
+                With SMTP, your visitors can easily send messages and inquiries to your designated email address.</p>
+            <p>This feature is coming soon...</p>
+           </section>
+
+
+
+    <!-- Bootstrap Scripts -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+                const active_link = $(".nav-link")[0]
+        active_link.className = "nav-link active"
+    </script>
+</body>
+</html>

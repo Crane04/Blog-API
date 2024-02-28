@@ -5,6 +5,8 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from .serializers import *
 from .models import *
 from userprofile.models import Token
@@ -49,3 +51,24 @@ class CommentView(GenericAPIView):
             serializer.save()
             return Response(serializer.data, status = status.HTTP_201_CREATED)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+class CommentViewV2(GenericAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    serializer_class = CommentSerializer
+
+    def post(self, request, id, *args, **kwargs):
+
+        post = Post.objects.get(custom_id = id)
+
+        request.data["post"] = post.pk
+
+        serializer = self.serializer_class(data = request.data)
+        serializer.is_valid(raise_exception = True)
+        serializer.save()
+
+        return Response(serializer.data, status = status.HTTP_201_CREATED)
+
+
+
+        

@@ -49,7 +49,7 @@ def growdan():
 
 def traffic():
     pre_loader = """
-        `<div class="spinner-grow text-danger" role="status">
+        preloader = ` <div class="spinner-grow text-danger" role="status">
             <span class="sr-only">Loading...</span>
           </div>
           <div class="spinner-grow text-warning" role="status">

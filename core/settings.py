@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'tinymce',
+    'markdown',
+    # 'django_markdown',
 ]
 
 MIDDLEWARE = [

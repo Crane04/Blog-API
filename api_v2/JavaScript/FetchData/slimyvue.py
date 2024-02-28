@@ -87,6 +87,11 @@ def slimy_vue(token):
                 ${post.body}
                 </div>`
         }
+        try{
+            bloggit_preloader.style.display = "none"
+        }catch(error){
+        
+        }
     })
 
     .catch((error) =>{
